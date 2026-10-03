@@ -84,6 +84,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 # Makes LANGUAGES and LANGUAGE_CODE available in every template.
                 "django.template.context_processors.i18n",
+                # Unread notification count for the navbar bell.
+                "apps.core.context_processors.unread_notifications",
             ],
         },
     },

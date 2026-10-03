@@ -21,6 +21,7 @@ urlpatterns = [
     path("watch/", views.watch_list, name="watch_list"),
     path("lots/<int:pk>/book/", views.book_lot, name="book_lot"),
     path("lots/<int:pk>/negotiate/", views.negotiate_lot, name="negotiate_lot"),
+    path("lots/<int:pk>/enquire/", views.enquire_lot, name="enquire_lot"),
     path("my-bookings/", views.my_bookings, name="my_bookings"),
     path("my-bookings/<int:booking_id>/rate/", views.rate_booking, name="rate_booking"),
     path("negotiations/", views.negotiation_list, name="negotiation_list"),

@@ -1,0 +1,553 @@
+# Kannada translations for RiceMandi
+# Copyright (C) 2026
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: RiceMandi 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-03 21:40+0000\n"
+"PO-Revision-Date: 2026-10-03 21:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: Kannada\n"
+"Language: kn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "RiceMandi"
+msgstr "ರೈಸ್ ಮಂಡಿ"
+
+msgid "Rates"
+msgstr "ದರಗಳು"
+
+msgid "Varieties"
+msgstr "ವಿಧಗಳು"
+
+msgid "Mills"
+msgstr "ಗಿಣಿಗಳು"
+
+msgid "Manage Varieties"
+msgstr "ವಿಧಗಳನ್ನು ನಿರ್ವಹಿಸಿ"
+
+msgid "Merchant"
+msgstr "ವ್ಯಾಪಾರಿ"
+
+msgid "My Lots"
+msgstr "ನನ್ನ ಸರಿಗೆಗಳು"
+
+msgid "Post Lot"
+msgstr "ಸರಿಗೆ ಪೋಸ್ಟ್ ಮಾಡಿ"
+
+msgid "Manage Bookings"
+msgstr "ಬುಕಿಂಗ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಿ"
+
+msgid "Watchlist"
+msgstr "ವಾಚ್‌ಲಿಸ್ಟ್"
+
+msgid "My Bookings"
+msgstr "ನನ್ನ ಬುಕಿಂಗ್‌ಗಳು"
+
+msgid "Negotiations"
+msgstr "ಮಾತುಕತೆಗಳು"
+
+msgid "Messages"
+msgstr "ಸಂದೇಶಗಳು"
+
+msgid "Dashboard"
+msgstr "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್"
+
+msgid "Log out"
+msgstr "ಲಾಗ್ ಔಟ್"
+
+msgid "Log in"
+msgstr "ಲಾಗಿನ್"
+
+msgid "Sign up"
+msgstr "ಸೈನ್ ಅಪ್"
+
+msgid "Toggle navigation"
+msgstr "ನ್ಯಾವಿಗೇಶನ್ ಟಾಗಲ್ ಮಾಡಿ"
+
+msgid "Live lots"
+msgstr "ಲೈವ್ ಸರಿಗೆಗಳು"
+
+msgid "No live lots available for this variety."
+msgstr "ಈ ವಿಧಕ್ಕೆ ಲೈವ್ ಸರಿಗೆಗಳು ಲಭ್ಯವಿಲ್ಲ."
+
+msgid "Quantity"
+msgstr "ಪ್ರಮಾಣ"
+
+msgid "quintal"
+msgstr "ಕ್ವಿಂಟಲ್"
+
+msgid "Mill"
+msgstr "ಗಿಣಿ"
+
+msgid "Moisture"
+msgstr "ತೇವ"
+
+msgid "Broken"
+msgstr "ಒಡೆದ"
+
+msgid "Price Trend (30 days)"
+msgstr "ಬೆಲೆ ಪ್ರವೃತ್ತಿ (30 ದಿನಗಳು)"
+
+msgid "Avg Price"
+msgstr "ಸರಾಸರಿ ಬೆಲೆ"
+
+msgid "Min Price"
+msgstr "ಕನಿಷ್ಠ ಬೆಲೆ"
+
+msgid "Max Price"
+msgstr "ಗರಿಷ್ಠ ಬೆಲೆ"
+
+msgid "View Lot"
+msgstr "ಸರಿಗೆ ನೋಡಿ"
+
+msgid "Book (First Come First Serve)"
+msgstr "ಬುಕ್ (ಮೊದಲು ಬಂದವರಿಗೆ ಮೊದಲು ಸಿಗುತ್ತದೆ)"
+
+msgid "Quantity (quintal)"
+msgstr "ಪ್ರಮಾಣ (ಕ್ವಿಂಟಲ್)"
+
+msgid "Join Queue"
+msgstr "ಕ್ಯೂಗೆ ಸೇರಿ"
+
+msgid "Negotiate Price"
+msgstr "ಬೆಲೆ ಮಾತುಕತೆ"
+
+msgid "Your price (₹/quintal)"
+msgstr "ನಿಮ್ಮ ಬೆಲೆ (₹/ಕ್ವಿಂಟಲ್)"
+
+msgid "Message"
+msgstr "ಸಂದೇಶ"
+
+msgid "Send Offer"
+msgstr "ಆಫರ್ ಕಳುಹಿಸಿ"
+
+msgid "This is your lot."
+msgstr "ಇದು ನಿಮ್ಮ ಸರಿಗೆ."
+
+msgid "Edit Lot"
+msgstr "ಸರಿಗೆ ಸಂಪಾದಿಸಿ"
+
+msgid "Log in to book or negotiate."
+msgstr "ಬುಕ್ ಅಥವಾ ಮಾತುಕತೆಗೆ ಲಾಗಿನ್ ಮಾಡಿ."
+
+msgid "Contact Merchant"
+msgstr "ವ್ಯಾಪಾರಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ"
+
+msgid "Your message"
+msgstr "ನಿಮ್ಮ ಸಂದೇಶ"
+
+msgid "Ask about this lot..."
+msgstr "ಈ ಸರಿಗೆ ಬಗ್ಗೆ ಕೇಳಿ..."
+
+msgid "Start Conversation"
+msgstr "ಸಂಭಾಷಣೆ ಪ್ರಾರಂಭಿಸಿ"
+
+msgid "Packets (26kg)"
+msgstr "ಪ್ಯಾಕೆಟ್‌ಗಳು (26ಕಿಜಿ)"
+
+msgid "Price/Packet"
+msgstr "ಬೆಲೆ/ಪ್ಯಾಕೆಟ್"
+
+msgid "Available"
+msgstr "ಲಭ್ಯವಿದೆ"
+
+msgid "Arrival"
+msgstr "ಆಗಮನ"
+
+msgid "Demand"
+msgstr "ಬೇಡಿಕೆ"
+
+msgid "Notes"
+msgstr "ಟಿಪ್ಪಣಿಗಳು"
+
+msgid "Merchant:"
+msgstr "ವ್ಯಾಪಾರಿ:"
+
+msgid "Verified"
+msgstr "ಪರಿಶೀಲಿಸಲಾಗಿದೆ"
+
+msgid "My Bookings"
+msgstr "ನನ್ನ ಬುಕಿಂಗ್‌ಗಳು"
+
+msgid "Queue #"
+msgstr "ಕ್ಯೂ #"
+
+msgid "Status"
+msgstr "ಸ್ಥಿತಿ"
+
+msgid "Booked"
+msgstr "ಬುಕ್ ಮಾಡಲಾಗಿದೆ"
+
+msgid "Actions"
+msgstr "ಕ್ರಿಯೆಗಳು"
+
+msgid "Pending"
+msgstr "ಬಾಕಿ"
+
+msgid "Confirmed"
+msgstr "ದೃಢೀಕರಿಸಲಾಗಿದೆ"
+
+msgid "Completed"
+msgstr "ಪೂರ್ಣಗೊಂಡಿದೆ"
+
+msgid "Cancelled"
+msgstr "ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ"
+
+msgid "No bookings yet."
+msgstr "ಇನ್ನೂ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ."
+
+msgid "Rate"
+msgstr "ರೇಟ್"
+
+msgid "Rate Your Experience"
+msgstr "ನಿಮ್ಮ ಅನುಭವವನ್ನು ರೇಟ್ ಮಾಡಿ"
+
+msgid "Your Rating"
+msgstr "ನಿಮ್ಮ ರೇಟಿಂಗ್"
+
+msgid "Comment (optional)"
+msgstr "ಕಾಮೆಂಟ್ (ಐಚ್ಛಿಕ)"
+
+msgid "Share your experience..."
+msgstr "ನಿಮ್ಮ ಅನುಭವವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ..."
+
+msgid "Submit Rating"
+msgstr "ರೇಟಿಂಗ್ ಸಲ್ಲಿಸಿ"
+
+msgid "You have already rated this booking."
+msgstr "ನೀವು ಈಗಾಗಲೇ ಈ ಬುಕಿಂಗ್‌ಗೆ ರೇಟಿಂಗ್ ನೀಡಿದ್ದೀರಿ."
+
+msgid "Please select a rating between 1 and 5."
+msgstr "ದಯವಿಟ್ಟು 1 ಮತ್ತು 5 ರ ನಡುವೆ ರೇಟಿಂಗ್ ಆಯ್ಕೆಮಾಡಿ."
+
+msgid "Thank you for your rating!"
+msgstr "ನಿಮ್ಮ ರೇಟಿಂಗ್‌ಗೆ ಧನ್ಯವಾದಗಳು!"
+
+msgid "All Ratings"
+msgstr "ಎಲ್ಲಾ ರೇಟಿಂಗ್‌ಗಳು"
+
+msgid "No ratings yet."
+msgstr "ಇನ್ನೂ ರೇಟಿಂಗ್‌ಗಳಿಲ್ಲ."
+
+msgid "Lot"
+msgstr "ಸರಿಗೆ"
+
+msgid "Manage Bookings"
+msgstr "ಬುಕಿಂಗ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಿ"
+
+msgid "Buyer"
+msgstr "ಖರೀದಿದಾರ"
+
+msgid "Confirm"
+msgstr "ದೃಢೀಕರಿಸಿ"
+
+msgid "Cancel"
+msgstr "ರದ್ದುಮಾಡಿ"
+
+msgid "Complete"
+msgstr "ಪೂರ್ಣಗೊಳಿಸಿ"
+
+msgid "No bookings yet."
+msgstr "ಇನ್ನೂ ಬುಕಿಂಗ್‌ಗಳಿಲ್ಲ."
+
+msgid "Notifications"
+msgstr "ಅಧಿಸೂಚನೆಗಳು"
+
+msgid "Mark all as read"
+msgstr "ಎಲ್ಲವನ್ನೂ ಓದಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಿ"
+
+msgid "Mark read"
+msgstr "ಓದಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಿ"
+
+msgid "No notifications yet."
+msgstr "ಇನ್ನೂ ಅಧಿಸೂಚನೆಗಳಿಲ್ಲ."
+
+msgid "ago"
+msgstr "ಹಿಂದೆ"
+
+msgid "Messages"
+msgstr "ಸಂದೇಶಗಳು"
+
+msgid "No conversations yet. Browse lots and click 'Contact Merchant' to start one."
+msgstr "ಇನ್ನೂ ಸಂಭಾಷಣೆಗಳಿಲ್ಲ. ಸರಿಗೆಗಳನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ ಮತ್ತು 'ವ್ಯಾಪಾರಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ' ಕ್ಲಿಕ್ ಮಾಡಿ."
+
+msgid "View Lot"
+msgstr "ಸರಿಗೆ ನೋಡಿ"
+
+msgid "No messages yet. Say hello!"
+msgstr "ಇನ್ನೂ ಸಂದೇಶಗಳಿಲ್ಲ. ಹಲೋ ಹೇಳಿ!"
+
+msgid "Type a message..."
+msgstr "ಸಂದೇಶ ಟೈಪ್ ಮಾಡಿ..."
+
+msgid "Price drop"
+msgstr "ಬೆಲೆ ಕುಸಿತ"
+
+msgid "New lot"
+msgstr "ಹೊಸ ಸರಿಗೆ"
+
+msgid "Enquiry"
+msgstr "ವಿಚಾರಣೆ"
+
+msgid "New message"
+msgstr "ಹೊಸ ಸಂದೇಶ"
+
+msgid "Approval"
+msgstr "ಅನುಮೋದನೆ"
+
+msgid "System"
+msgstr "ಸಿಸ್ಟಮ್"
+
+msgid "Price Alert: %(variety)s"
+msgstr "ಬೆಲೆ ಎಚ್ಚರಿಕೆ: %(variety)s"
+
+msgid "The price for %(variety)s has dropped to ₹%(price)/quintal or below your target of ₹%(target)/quintal."
+msgstr "%(variety)s ಬೆಲೆ ₹%(price)/ಕ್ವಿಂಟಲ್‌ಗೆ ಅಥವಾ ನಿಮ್ಮ ಟಾರ್ಗೆಟ್ ₹%(target)/ಕ್ವಿಂಟಲ್‌ಗಿಂತ ಕಡಿಮೆಗೆ ಬಂದಿದೆ."
+
+msgid "You are #%(pos)d in queue for %(lot)s."
+msgstr "ನೀವು %(lot)s ಗೆ #%(pos)d ನೇ ಸ್ಥಾನದಲ್ಲಿದ್ದೀರಿ."
+
+msgid "You already have a booking for this lot."
+msgstr "ನೀವು ಈಗಾಗಲೇ ಈ ಸರಿಗೆಗೆ ಬುಕಿಂಗ್ ಹೊಂದಿದ್ದೀರಿ."
+
+msgid "Your offer has been sent to the merchant."
+msgstr "ನಿಮ್ಮ ಆಫರ್ ವ್ಯಾಪಾರಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ."
+
+msgid "You already have a pending negotiation for this lot."
+msgstr "ನೀವು ಈ ಸರಿಗೆಗೆ ಬಾಕಿ ಮಾತುಕತೆಯನ್ನು ಹೊಂದಿದ್ದೀರಿ."
+
+msgid "Offer accepted."
+msgstr "ಆಫರ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ."
+
+msgid "Offer rejected."
+msgstr "ಆಫರ್ ತಿರಸ್ಕರಿಸಲಾಗಿದೆ."
+
+msgid "Counter offer sent."
+msgstr "ಪ್ರತಿ-ಆಫರ್ ಕಳುಹಿಸಲಾಗಿದೆ."
+
+msgid "Enter a valid counter price."
+msgstr "ಮಾನ್ಯವಾದ ಪ್ರತಿ-ಬೆಲೆ ನಮೂದಿಸಿ."
+
+msgid "Enter a valid quantity."
+msgstr "ಮಾನ್ಯವಾದ ಪ್ರಮಾಣ ನಮೂದಿಸಿ."
+
+msgid "Not enough quantity available."
+msgstr "ಸಾಕಷ್ಟು ಪ್ರಮಾಣ ಲಭ್ಯವಿಲ್ಲ."
+
+msgid "Enter a valid price."
+msgstr "ಮಾನ್ಯವಾದ ಬೆಲೆ ನಮೂದಿಸಿ."
+
+msgid "Variety created successfully."
+msgstr "ವಿಧ ಯಶಸ್ವಿಯಾಗಿ ರಚಿಸಲಾಗಿದೆ."
+
+msgid "Variety updated successfully."
+msgstr "ವಿಧ ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ."
+
+msgid "This variety already exists. Use the existing variety instead."
+msgstr "ಈ ವಿಧ ಈಗಾಗಲೇ ಇದೆ. ಅದನ್ನು ಬಳಸಿ."
+
+msgid "You don't have permission to edit this variety."
+msgstr "ಈ ವಿಧವನ್ನು ಸಂಪಾದಿಸಲು ನಿಮಗೆ ಅನುಮತಿ ಇಲ್ಲ."
+
+msgid "You don't have permission to change this variety."
+msgstr "ಈ ವಿಧವನ್ನು ಬದಲಾಯಿಸಲು ನಿಮಗೆ ಅನುಮತಿ ಇಲ್ಲ."
+
+msgid "Variety %(name)s has been %(action)s."
+msgstr "ವಿಧ %(name)s %(action)s ಆಗಿದೆ."
+
+msgid "activated"
+msgstr "ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ"
+
+msgid "deactivated"
+msgstr "ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ"
+
+msgid "Lot posted successfully."
+msgstr "ಸರಿಗೆ ಯಶಸ್ವಿಯಾಗಿ ಪೋಸ್ಟ್ ಆಗಿದೆ."
+
+msgid "Lot updated successfully."
+msgstr "ಸರಿಗೆ ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ."
+
+msgid "Removed from watchlist."
+msgstr "ವಾಚ್‌ಲಿಸ್ಟ್‌ನಿಂದ ತೆಗೆಯಲಾಗಿದೆ."
+
+msgid "Watching %(name)s"
+msgstr "%(name)s ವೀಕ್ಷಿಸಲಾಗುತ್ತಿದೆ"
+
+msgid "Booking #%(pos)d status updated to %(status)s."
+msgstr "ಬುಕಿಂಗ್ #%(pos)d ಸ್ಥಿತಿ %(status)s ಗೆ ನವೀಕರಿಸಲಾಗಿದೆ."
+
+msgid "Invalid status."
+msgstr "ಅಮಾನ್ಯ ಸ್ಥಿತಿ."
+
+msgid "Permission denied."
+msgstr "ಅನುಮತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ."
+
+msgid "Merchant %(name)s has been approved."
+msgstr "ವ್ಯಾಪಾರಿ %(name)s ಅನುಮೋದಿಸಲಾಗಿದೆ."
+
+msgid "Merchant %(name)s rejected. Contact them if needed."
+msgstr "ವ್ಯಾಪಾರಿ %(name)s ತಿರಸ್ಕರಿಸಲಾಗಿದೆ. ಅಗತ್ಯವಿದ್ದರೆ ಅವರನ್ನು ಸಂಪರ್ಕಿಸಿ."
+
+msgid "Your merchant account has been created and is pending admin approval."
+msgstr "ನಿಮ್ಮ ವ್ಯಾಪಾರಿ ಖಾತೆ ರಚಿಸಲಾಗಿದೆ ಮತ್ತು ನಿರ್ವಾಹಕ ಅನುಮೋದನೆಗೆ ಬಾಕಿಯಿದೆ."
+
+msgid "Your account has been created. You can now log in."
+msgstr "ನಿಮ್ಮ ಖಾತೆ ರಚಿಸಲಾಗಿದೆ. ನೀವು ಈಗ ಲಾಗಿನ್ ಮಾಡಬಹುದು."
+
+msgid "Hello, I'm interested in your lot: %(lot)s"
+msgstr "ಹಲೋ, ನಿಮ್ಮ ಸರಿಗೆಯಲ್ಲಿ ನನಗೆ ಆಸಕ್ತಿಯಿದೆ: %(lot)s"
+
+msgid "You cannot start a conversation with yourself."
+msgstr "ನೀವು ಸ್ವತಃ ಸಂಭಾಷಣೆ ಪ್ರಾರಂಭಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
+
+msgid "Close"
+msgstr "ಮುಚ್ಚಿ"
+
+msgid "Buyer"
+msgstr "ಖರೀದಿದಾರ"
+
+msgid "Merchant"
+msgstr "ವ್ಯಾಪಾರಿ"
+
+msgid "Admin"
+msgstr "ನಿರ್ವಾಹಕ"
+
+msgid "Kannada"
+msgstr "ಕನ್ನಡ"
+
+msgid "English"
+msgstr "ಇಂಗ್ಲಿಷ್"
+
+msgid "Paddy"
+msgstr "ಭತ್ತ"
+
+msgid "Rice"
+msgstr "ಅಕ್ಕಿ"
+
+msgid "Broken"
+msgstr "ಒಡೆದ"
+
+msgid "Bran"
+msgstr "ಹಳ್ಳಿ"
+
+msgid "Grade 1"
+msgstr "ಗ್ರೇಡ್ 1"
+
+msgid "Grade 2"
+msgstr "ಗ್ರೇಡ್ 2"
+
+msgid "Common"
+msgstr "ಸಾಮಾನ್ಯ"
+
+msgid "Active"
+msgstr "ಸಕ್ರಿಯ"
+
+msgid "Sold"
+msgstr "ಮಾರಾಟ"
+
+msgid "Withdrawn"
+msgstr "ಹಿಂಪಡೆಯಲಾಗಿದೆ"
+
+msgid "Open"
+msgstr "ತೆರೆದ"
+
+msgid "Closed"
+msgstr "ಮುಚ್ಚಲಾಗಿದೆ"
+
+msgid "Mill"
+msgstr "ಗಿಣಿ"
+
+msgid "Mills"
+msgstr "ಗಿಣಿಗಳು"
+
+msgid "Variety"
+msgstr "ವಿಧ"
+
+msgid "Varieties"
+msgstr "ವಿಧಗಳು"
+
+msgid "Lot"
+msgstr "ಸರಿಗೆ"
+
+msgid "Lots"
+msgstr "ಸರಿಗೆಗಳು"
+
+msgid "Price Record"
+msgstr "ಬೆಲೆ ದಾಖಲೆ"
+
+msgid "Price Records"
+msgstr "ಬೆಲೆ ದಾಖಲೆಗಳು"
+
+msgid "Watch"
+msgstr "ವೀಕ್ಷಿಸಿ"
+
+msgid "Watches"
+msgstr "ವೀಕ್ಷಿಸುತ್ತಾನೆ"
+
+msgid "Enquiry"
+msgstr "ವಿಚಾರಣೆ"
+
+msgid "Enquiries"
+msgstr "ವಿಚಾರಣೆಗಳು"
+
+msgid "Booking"
+msgstr "ಬುಕಿಂಗ್"
+
+msgid "Bookings"
+msgstr "ಬುಕಿಂಗ್‌ಗಳು"
+
+msgid "Negotiation"
+msgstr "ಮಾತುಕತೆ"
+
+msgid "Negotiations"
+msgstr "ಮಾತುಕತೆಗಳು"
+
+msgid "Price Alert"
+msgstr "ಬೆಲೆ ಎಚ್ಚರಿಕೆ"
+
+msgid "Price Alerts"
+msgstr "ಬೆಲೆ ಎಚ್ಚರಿಕೆಗಳು"
+
+msgid "Trader Rating"
+msgstr "ವ್ಯಾಪಾರಿ ರೇಟಿಂಗ್"
+
+msgid "Trader Ratings"
+msgstr "ವ್ಯಾಪಾರಿ ರೇಟಿಂಗ್‌ಗಳು"
+
+msgid "Market Trend"
+msgstr "ಮಾರುಕಟ್ಟೆ ಪ್ರವೃತ್ತಿ"
+
+msgid "Market Trends"
+msgstr "ಮಾರುಕಟ್ಟೆ ಪ್ರವೃತ್ತಿಗಳು"
+
+msgid "Notification"
+msgstr "ಅಧಿಸೂಚನೆ"
+
+msgid "Notifications"
+msgstr "ಅಧಿಸೂಚನೆಗಳು"
+
+msgid "Conversation"
+msgstr "ಸಂಭಾಷಣೆ"
+
+msgid "Conversations"
+msgstr "ಸಂಭಾಷಣೆಗಳು"
+
+msgid "Message"
+msgstr "ಸಂದೇಶ"
+
+msgid "Messages"
+msgstr "ಸಂದೇಶಗಳು"
+
+msgid "No active price alerts to check."
+msgstr "ಪರಿಶೀಲಿಸಲು ಯಾವುದೇ ಸಕ್ರಿಯ ಬೆಲೆ ಎಚ್ಚರಿಕೆಗಳಿಲ್ಲ."
+
+msgid "Checked %(alerts)d alerts: %(triggered)d triggered, %(notified)d notifications created."
+msgstr "%(alerts)d ಎಚ್ಚರಿಕೆಗಳನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ: %(triggered)d ಟ್ರಿಗರ್, %(notified)d ಅಧಿಸೂಚನೆಗಳು ರಚಿಸಲಾಗಿದೆ."
+
+msgid "Live rice and paddy rates at the APMC yard."
+msgstr "APMC ಯಾರ್ಡ್‌ನಲ್ಲಿ ಲೈವ್ ಅಕ್ಕಿ ಮತ್ತು ಭತ್ತದ ದರಗಳು."

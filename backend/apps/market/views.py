@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET, require_POST
 
 from apps.market.forms import LotForm, VarietyForm
-from apps.market.models import Lot, Mill, PriceRecord, Variety, Watch
+from apps.market.models import Booking, Lot, Mill, PriceRecord, TraderRating, Variety, Watch
 from apps.market.permissions import admin_required, approved_merchant_required
 
 
@@ -123,11 +123,43 @@ def variety_toggle(request, pk):
 
 @require_GET
 def variety_detail(request, pk):
+    import json
+    from datetime import timedelta
+
+    from django.utils import timezone
+
+    from apps.market.models import MarketTrend
+
     variety = get_object_or_404(Variety, pk=pk, is_active=True)
     lots = Lot.objects.filter(variety=variety, status=Lot.STATUS_ACTIVE, is_available=True).select_related(
         "merchant", "mill"
     )
-    return render(request, "market/variety_detail.html", {"variety": variety, "lots": lots})
+
+    # Build trend data for Chart.js (last 30 days)
+    trends = MarketTrend.objects.filter(variety=variety).order_by("-date")[:30]
+    if trends.exists():
+        trend_labels = [t.date.strftime("%d %b") for t in reversed(list(trends))]
+        trend_avg = [float(t.avg_price) for t in reversed(list(trends))]
+        trend_min = [float(t.min_price) for t in reversed(list(trends))]
+        trend_max = [float(t.max_price) for t in reversed(list(trends))]
+    else:
+        trend_labels = []
+        trend_avg = []
+        trend_min = []
+        trend_max = []
+
+    return render(
+        request,
+        "market/variety_detail.html",
+        {
+            "variety": variety,
+            "lots": lots,
+            "trend_labels": json.dumps(trend_labels),
+            "trend_avg": json.dumps(trend_avg),
+            "trend_min": json.dumps(trend_min),
+            "trend_max": json.dumps(trend_max),
+        },
+    )
 
 
 @require_GET
@@ -290,6 +322,61 @@ def negotiate_lot(request, pk):
 
 
 @login_required
+def enquire_lot(request, pk):
+    """Buyer sends an enquiry about a lot. Auto-creates a chat conversation."""
+    from apps.chat.models import Conversation, Message
+    from apps.market.models import Enquiry
+    from apps.notifications.models import Notification
+
+    lot = get_object_or_404(Lot, pk=pk, status=Lot.STATUS_ACTIVE, is_available=True)
+    if request.method == "POST":
+        message = request.POST.get("message", "").strip()
+        quantity_wanted = request.POST.get("quantity_wanted", "0")
+        try:
+            quantity_wanted = Decimal(quantity_wanted)
+        except Exception:
+            quantity_wanted = Decimal("0")
+
+        if not message:
+            messages.error(request, _("Please enter a message."))
+            return redirect("market:lot_detail", pk=pk)
+
+        # Create enquiry
+        enquiry = Enquiry.objects.create(
+            buyer=request.user,
+            lot=lot,
+            message=message,
+            quantity_wanted=quantity_wanted if quantity_wanted > 0 else None,
+        )
+
+        # Auto-create chat conversation
+        conversation, created = Conversation.objects.get_or_create(
+            buyer=request.user,
+            merchant=lot.merchant,
+            lot=lot,
+        )
+        if created:
+            Message.objects.create(
+                conversation=conversation,
+                sender=request.user,
+                body=message,
+            )
+
+        # Notify merchant
+        Notification.objects.create(
+            recipient=lot.merchant,
+            kind=Notification.KIND_ENQUIRY,
+            title=_("New Enquiry"),
+            body=_("%(buyer)s enquired about %(lot)s") % {"buyer": request.user.username, "lot": lot.variety.name},
+            url=f"/lots/{lot.pk}/",
+        )
+
+        messages.success(request, _("Your enquiry has been sent to the merchant."))
+        return redirect("market:lot_detail", pk=pk)
+    return redirect("market:lot_detail", pk=pk)
+
+
+@login_required
 def negotiation_list(request):
     """List negotiations for the current user (as buyer or merchant)."""
     from apps.market.models import Negotiation
@@ -332,3 +419,91 @@ def negotiation_respond(request, pk):
                 messages.error(request, _("Enter a valid counter price."))
         return redirect("market:negotiation_list")
     return redirect("market:negotiation_list")
+
+
+@login_required
+def rate_booking(request, booking_id):
+    """Rate a completed booking (buyer rates merchant)."""
+    booking = get_object_or_404(Booking, pk=booking_id, buyer=request.user, status=Booking.STATUS_COMPLETED)
+
+    # Check if already rated
+    if TraderRating.objects.filter(rater=request.user, rated=booking.lot.merchant, lot=booking.lot).exists():
+        messages.info(request, _("You have already rated this booking."))
+        return redirect("market:my_bookings")
+
+    if request.method == "POST":
+        rating_value = request.POST.get("rating", 0)
+        comment = request.POST.get("comment", "")
+        try:
+            rating_value = int(rating_value)
+        except (ValueError, TypeError):
+            rating_value = 0
+
+        if rating_value < 1 or rating_value > 5:
+            messages.error(request, _("Please select a rating between 1 and 5."))
+            return redirect("market:my_bookings")
+
+        TraderRating.objects.create(
+            rater=request.user,
+            rated=booking.lot.merchant,
+            lot=booking.lot,
+            rating=rating_value,
+            comment=comment,
+        )
+        messages.success(request, _("Thank you for your rating!"))
+        return redirect("market:my_bookings")
+
+    return render(request, "market/rate_booking.html", {"booking": booking})
+
+
+@login_required
+def merchant_ratings(request, merchant_id):
+    """Show all ratings for a merchant."""
+    from apps.accounts.models import User
+
+    merchant = get_object_or_404(User, pk=merchant_id, role=User.ROLE_MERCHANT)
+    ratings = TraderRating.objects.filter(rated=merchant).select_related("rater", "lot", "lot__variety").order_by(
+        "-created_at"
+    )
+    avg_rating = ratings.aggregate(avg=Avg("rating"))["avg"] or 0
+    rating_count = ratings.count()
+
+    return render(
+        request,
+        "market/merchant_ratings.html",
+        {
+            "merchant": merchant,
+            "ratings": ratings,
+            "avg_rating": round(avg_rating, 1),
+            "rating_count": rating_count,
+        },
+    )
+
+
+@login_required
+def merchant_bookings(request):
+    """Merchant view to manage bookings for their lots."""
+    bookings = (
+        Booking.objects.filter(lot__merchant=request.user)
+        .select_related("buyer", "lot", "lot__variety", "lot__mill")
+        .order_by("lot", "queue_position")
+    )
+    return render(request, "market/merchant_bookings.html", {"bookings": bookings})
+
+
+@login_required
+@require_POST
+def booking_update_status(request, pk):
+    """Merchant updates booking status (confirm/cancel/complete)."""
+    booking = get_object_or_404(Booking, pk=pk, lot__merchant=request.user)
+    new_status = request.POST.get("status")
+
+    valid_statuses = [Booking.STATUS_CONFIRMED, Booking.STATUS_CANCELLED, Booking.STATUS_COMPLETED]
+    if new_status in valid_statuses:
+        booking.status = new_status
+        booking.save(update_fields=["status"])
+        messages.success(request, _("Booking #%(pos)d status updated to %(status)s.") % {"pos": booking.queue_position, "status": new_status})
+    else:
+        messages.error(request, _("Invalid status."))
+
+    return redirect("market:merchant_bookings")
