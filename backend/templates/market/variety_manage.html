@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Varieties" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">{% trans "Varieties" %}</h1>
+    {% if user.is_authenticated and user.role == "merchant" and user.is_approved or user.is_superuser or user.role == "admin" %}
+      <a href="{% url 'market:variety_create' %}" class="btn btn-success btn-sm">
+        <i class="bi bi-plus-lg"></i> {% trans "Add variety" %}
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>{% trans "Name" %}</th>
+          <th>{% trans "Category" %}</th>
+          <th>{% trans "Grade" %}</th>
+          <th>{% trans "Live lots" %}</th>
+          <th>{% trans "Added by" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for variety in varieties %}
+        <tr>
+          <td><a href="{% url 'market:variety_detail' variety.pk %}">{{ variety.name }}</a></td>
+          <td>{{ variety.get_category_display }}</td>
+          <td>{{ variety.get_grade_display }}</td>
+          <td>{{ variety.live_lots|default:0 }}</td>
+          <td>{% if variety.created_by %}{{ variety.created_by.business_name|default:variety.created_by.username }}{% else %}{% trans "Admin" %}{% endif %}</td>
+          <td>
+            {% if variety.is_active %}
+              <span class="badge bg-success">{% trans "Active" %}</span>
+            {% else %}
+              <span class="badge bg-secondary">{% trans "Inactive" %}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if user.is_superuser or user.role == "admin" or user.role == "merchant" and user.is_approved and variety.created_by == user %}
+              <a href="{% url 'market:variety_edit' variety.pk %}" class="btn btn-sm btn-outline-primary">{% trans "Edit" %}</a>
+              <form method="post" action="{% url 'market:variety_toggle' variety.pk %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-secondary">
+                  {% if variety.is_active %}{% trans "Deactivate" %}{% else %}{% trans "Activate" %}{% endif %}
+                </button>
+              </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" class="text-center text-muted">{% trans "No varieties found." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

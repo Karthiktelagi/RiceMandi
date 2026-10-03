@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Watchlist" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-3">{% trans "Watchlist" %}</h1>
+  {% for watch in watches %}
+    <div class="card mb-2">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="mb-0">{{ watch.variety.name }}</h6>
+          <small class="text-muted">{{ watch.variety.get_category_display }}</small>
+        </div>
+        <form method="post" action="{% url 'market:watch_toggle' watch.variety.pk %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-danger">{% trans "Unwatch" %}</button>
+        </form>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted">{% trans "No watched varieties." %}</p>
+  {% endfor %}
+</div>
+{% endblock %}

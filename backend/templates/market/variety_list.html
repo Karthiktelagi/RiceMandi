@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Varieties" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-3">{% trans "Varieties" %}</h1>
+  <div class="row g-3">
+    {% for variety in varieties %}
+      <div class="col-md-4 col-sm-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title"><a href="{% url 'market:variety_detail' variety.pk %}">{{ variety.name }}</a></h5>
+            <p class="card-text text-muted small">{{ variety.get_category_display }} • {{ variety.get_grade_display }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <p class="text-muted">{% trans "No varieties available." %}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

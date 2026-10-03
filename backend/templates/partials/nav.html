@@ -1,0 +1,93 @@
+{% load i18n %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{% url 'core:home' %}">
+      <i class="bi bi-basket2-fill fs-5"></i>{% trans "RiceMandi" %}
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'core:home' %}">
+            <i class="bi bi-bar-chart-line"></i> {% trans "Rates" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if 'variety_list' in request.resolver_match.view_name %}active{% endif %}" href="{% url 'market:variety_list' %}">
+            <i class="bi bi-collection"></i> {% trans "Varieties" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if 'mill_list' in request.resolver_match.view_name %}active{% endif %}" href="{% url 'market:mill_list' %}">
+            <i class="bi bi-building"></i> {% trans "Mills" %}
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'market:variety_manage' %}">
+            <i class="bi bi-gear"></i> {% trans "Manage Varieties" %}
+          </a>
+        </li>
+        {% if user.role == "merchant" and user.is_approved or user.is_superuser or user.role == "admin" %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-box-seam"></i> {% trans "Merchant" %}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'market:my_lots' %}">{% trans "My Lots" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'market:lot_create' %}">{% trans "Post Lot" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'market:merchant_bookings' %}">{% trans "Manage Bookings" %}</a></li>
+          </ul>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'market:watch_list' %}">
+            <i class="bi bi-heart"></i> {% trans "Watchlist" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'market:my_bookings' %}">
+            <i class="bi bi-clock-history"></i> {% trans "My Bookings" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'market:negotiation_list' %}">
+            <i class="bi bi-hand-thumbs-up"></i> {% trans "Negotiations" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'chat:list' %}">
+            <i class="bi bi-chat-dots"></i> {% trans "Messages" %}
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        {% include "partials/language_toggle.html" %}
+        {% if user.is_authenticated %}
+          <a href="{% url 'notifications:list' %}" class="btn btn-outline-light btn-sm position-relative">
+            <i class="bi bi-bell"></i>
+            {% if unread_notifications > 0 %}
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ unread_notifications }}
+              </span>
+            {% endif %}
+          </a>
+          <a class="btn btn-outline-light btn-sm" href="{% url 'accounts:dashboard' %}">
+            <i class="bi bi-speedometer2"></i> {% trans "Dashboard" %}
+          </a>
+          <form method="post" action="{% url 'accounts:logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light btn-sm">{% trans "Log out" %}</button>
+          </form>
+        {% else %}
+          <a class="btn btn-outline-light btn-sm" href="{% url 'accounts:login' %}">{% trans "Log in" %}</a>
+          <a class="btn btn-light btn-sm" href="{% url 'accounts:signup' %}">{% trans "Sign up" %}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Manage Bookings" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-3">{% trans "Manage Bookings" %}</h1>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>{% trans "Queue #" %}</th>
+          <th>{% trans "Buyer" %}</th>
+          <th>{% trans "Variety" %}</th>
+          <th>{% trans "Quantity" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Booked" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in bookings %}
+        <tr>
+          <td><span class="badge bg-primary">#{{ booking.queue_position }}</span></td>
+          <td>{{ booking.buyer.username }}</td>
+          <td><a href="{% url 'market:lot_detail' booking.lot.pk %}">{{ booking.lot.variety.name }}</a></td>
+          <td>{{ booking.quantity_quintal }} q</td>
+          <td>
+            {% if booking.status == "pending" %}
+              <span class="badge bg-warning text-dark">{% trans "Pending" %}</span>
+            {% elif booking.status == "confirmed" %}
+              <span class="badge bg-success">{% trans "Confirmed" %}</span>
+            {% elif booking.status == "completed" %}
+              <span class="badge bg-info">{% trans "Completed" %}</span>
+            {% else %}
+              <span class="badge bg-secondary">{% trans "Cancelled" %}</span>
+            {% endif %}
+          </td>
+          <td>{{ booking.created_at|date:"d M Y" }}</td>
+          <td>
+            <form method="post" action="{% url 'market:booking_update_status' booking.pk %}" class="d-inline">
+              {% csrf_token %}
+              {% if booking.status == "pending" %}
+                <button type="submit" name="status" value="confirmed" class="btn btn-sm btn-success">{% trans "Confirm" %}</button>
+                <button type="submit" name="status" value="cancelled" class="btn btn-sm btn-outline-danger">{% trans "Cancel" %}</button>
+              {% elif booking.status == "confirmed" %}
+                <button type="submit" name="status" value="completed" class="btn btn-sm btn-info">{% trans "Complete" %}</button>
+                <button type="submit" name="status" value="cancelled" class="btn btn-sm btn-outline-danger">{% trans "Cancel" %}</button>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" class="text-center text-muted">{% trans "No bookings yet." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

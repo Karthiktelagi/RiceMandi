@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Admin Dashboard" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-3">{% trans "Admin Dashboard" %}</h1>
+  
+  {% if pending_merchants %}
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">{% trans "Pending Merchant Approvals" %}</h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{% trans "Username" %}</th>
+              <th>{% trans "Business Name" %}</th>
+              <th>{% trans "GST Number" %}</th>
+              <th>{% trans "Phone" %}</th>
+              <th>{% trans "Actions" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for merchant in pending_merchants %}
+            <tr>
+              <td>{{ merchant.username }}</td>
+              <td>{{ merchant.business_name }}</td>
+              <td>{{ merchant.gst_number|default:"-" }}</td>
+              <td>{{ merchant.phone }}</td>
+              <td>
+                <form method="post" action="{% url 'accounts:merchant_approve' merchant.pk %}" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-success">{% trans "Approve" %}</button>
+                </form>
+                <form method="post" action="{% url 'accounts:merchant_reject' merchant.pk %}" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-danger">{% trans "Reject" %}</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+  <p class="text-muted">{% trans "Manage varieties, mills, and monitor the platform from the admin panel." %}</p>
+  <a href="/admin/" class="btn btn-primary">{% trans "Go to Django Admin" %}</a>
+</div>
+{% endblock %}

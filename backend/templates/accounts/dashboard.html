@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Dashboard" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-1">{% blocktrans with name=user.username %}Hello, {{ name }}{% endblocktrans %}</h1>
+  <p class="text-muted">{% trans "Milestone 3 fills this in per role." %}</p>
+</div>
+{% endblock %}

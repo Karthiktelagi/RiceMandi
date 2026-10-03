@@ -1,0 +1,83 @@
+/* RiceMandi — mobile-first, because most yard users are on a phone. */
+
+:root {
+  --rm-green: #1f7a3d;
+  --rm-green-light: #e8f3ec;
+  --rm-price-font-variant-numeric: tabular-nums;
+}
+
+body {
+  /* Kannada and Devanagari need a font that has those glyphs; the Noto stack
+     falls back gracefully on Android, which is most of the traffic. */
+  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans Kannada",
+    "Nirmala UI", Roboto, sans-serif;
+}
+
+/* Prices must line up in a column or the board is unreadable. */
+.price {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.price-amount {
+  font-size: 1.15rem;
+}
+
+.price-unit {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--bs-secondary-color);
+}
+
+/* Comfortable tap targets for gloved hands on a phone. */
+.btn {
+  min-height: 2.5rem;
+}
+
+.lot-card {
+  transition: transform 0.12s ease-in-out, box-shadow 0.12s ease-in-out;
+}
+
+.lot-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+}
+
+.rate-up {
+  color: var(--rm-green);
+}
+
+.rate-down {
+  color: #b02a37;
+}
+
+.rate-flat {
+  color: var(--bs-secondary-color);
+}
+
+/* Chat bubbles, used from Milestone 8. */
+.chat-bubble {
+  max-width: 78%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.9rem;
+  word-break: break-word;
+}
+
+.chat-bubble.mine {
+  background: var(--rm-green);
+  color: #fff;
+  margin-left: auto;
+}
+
+.chat-bubble.theirs {
+  background: #f1f3f4;
+  margin-right: auto;
+}
+
+/* Respect users who asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

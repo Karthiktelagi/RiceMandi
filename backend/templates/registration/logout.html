@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Logged out" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="text-center">
+    <h1 class="h3 mb-3">{% trans "You have been logged out" %}</h1>
+    <a href="{% url 'core:home' %}" class="btn btn-success">{% trans "Return to home" %}</a>
+  </div>
+</div>
+{% endblock %}

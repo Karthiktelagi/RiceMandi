@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Negotiations" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-3">{% trans "Negotiations" %}</h1>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>{% trans "Variety" %}</th>
+          <th>{% trans "Buyer" %}</th>
+          <th>{% trans "Your Offer" %}</th>
+          <th>{% trans "Asking" %}</th>
+          <th>{% trans "Quantity" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Action" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for neg in negotiations %}
+        <tr>
+          <td><a href="{% url 'market:lot_detail' neg.lot.pk %}">{{ neg.lot.variety.name }}</a></td>
+          <td>{{ neg.buyer.username }}</td>
+          <td>₹{{ neg.buyer_price }}/q</td>
+          <td>{% if neg.merchant_price %}₹{{ neg.merchant_price }}/q{% else %}—{% endif %}</td>
+          <td>{{ neg.quantity_quintal }} q</td>
+          <td>
+            {% if neg.status == "pending" %}
+              <span class="badge bg-warning text-dark">{% trans "Pending" %}</span>
+            {% elif neg.status == "accepted" %}
+              <span class="badge bg-success">{% trans "Accepted" %}</span>
+            {% elif neg.status == "rejected" %}
+              <span class="badge bg-danger">{% trans "Rejected" %}</span>
+            {% elif neg.status == "countered" %}
+              <span class="badge bg-info">{% trans "Countered" %}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if neg.merchant == user and neg.status == "pending" %}
+              <form method="post" action="{% url 'market:negotiation_respond' neg.pk %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="accept">
+                <button type="submit" class="btn btn-sm btn-success">{% trans "Accept" %}</button>
+              </form>
+              <form method="post" action="{% url 'market:negotiation_respond' neg.pk %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="reject">
+                <button type="submit" class="btn btn-sm btn-outline-danger">{% trans "Reject" %}</button>
+              </form>
+              <form method="post" action="{% url 'market:negotiation_respond' neg.pk %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="counter">
+                <input type="number" name="counter_price" class="form-control form-control-sm d-inline w-auto" placeholder="₹" step="0.01" required>
+                <button type="submit" class="btn btn-sm btn-outline-primary">{% trans "Counter" %}</button>
+              </form>
+            {% elif neg.buyer == user and neg.status == "countered" %}
+              <form method="post" action="{% url 'market:negotiation_respond' neg.pk %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="accept">
+                <button type="submit" class="btn btn-sm btn-success">{% trans "Accept ₹{{ neg.merchant_price }}" %}</button>
+              </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" class="text-center text-muted">{% trans "No negotiations yet." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

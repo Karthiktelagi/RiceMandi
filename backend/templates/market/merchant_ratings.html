@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ merchant.business_name|default:merchant.username }} — {% trans "Ratings" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 800px;">
+  <h1 class="h3 mb-3">
+    {{ merchant.business_name|default:merchant.username }}
+    {% if merchant.is_approved %}
+      <span class="badge bg-success"><i class="bi bi-patch-check-fill"></i> {% trans "Verified" %}</span>
+    {% endif %}
+  </h1>
+
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body d-flex align-items-center gap-3">
+      <div class="display-4 fw-bold text-warning">{{ avg_rating }}</div>
+      <div>
+        <div class="mb-1">
+          {% for i in "54321" %}
+            {% if forloop.counter <= avg_rating|floatformat:0 %}
+              <i class="bi bi-star-fill text-warning"></i>
+            {% else %}
+              <i class="bi bi-star text-muted"></i>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <small class="text-muted">{% blocktrans count count=rating_count %}{{ count }} rating{% plural %}{{ count }} ratings{% endblocktrans %}</small>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="h5 mb-3">{% trans "All Ratings" %}</h2>
+  {% for r in ratings %}
+    <div class="card mb-2 shadow-sm border-0">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <strong>{{ r.rater.username }}</strong>
+            <div class="mb-1">
+              {% for i in "54321" %}
+                {% if forloop.counter <= r.rating %}
+                  <i class="bi bi-star-fill text-warning"></i>
+                {% else %}
+                  <i class="bi bi-star text-muted"></i>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          <small class="text-muted">{{ r.created_at|date:"d M Y" }}</small>
+        </div>
+        {% if r.lot %}
+          <small class="text-muted">{% trans "Lot" %}: {{ r.lot.variety.name }}</small>
+        {% endif %}
+        {% if r.comment %}
+          <p class="mb-0 mt-2">{{ r.comment }}</p>
+        {% endif %}
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted">{% trans "No ratings yet." %}</p>
+  {% endfor %}
+</div>
+{% endblock %}

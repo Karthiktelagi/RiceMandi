@@ -1,0 +1,14 @@
+{% load i18n %}
+{% comment %}
+Plain links, not a form: the language toggle must work before JavaScript loads
+on a slow yard connection. The current language is marked with aria-current.
+{% endcomment %}
+<div class="btn-group btn-group-sm" role="group" aria-label="{% trans 'Language' %}">
+  {% get_current_language as CURRENT_LANGUAGE %}
+  <a class="btn btn-outline-secondary {% if CURRENT_LANGUAGE == 'kn' %}active{% endif %}"
+     href="{% url 'core:set_language' 'kn' %}?next={{ request.get_full_path|urlencode }}"
+     aria-current="{% if CURRENT_LANGUAGE == 'kn' %}true{% else %}false{% endif %}">ಕನ್ನಡ</a>
+  <a class="btn btn-outline-secondary {% if CURRENT_LANGUAGE == 'en' %}active{% endif %}"
+     href="{% url 'core:set_language' 'en' %}?next={{ request.get_full_path|urlencode }}"
+     aria-current="{% if CURRENT_LANGUAGE == 'en' %}true{% else %}false{% endif %}">English</a>
+</div>

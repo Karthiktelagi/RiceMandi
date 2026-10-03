@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Messages" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 800px;">
+  <h1 class="h3 mb-3">{% trans "Messages" %}</h1>
+
+  {% for conv in conversations %}
+    <a href="{% url 'chat:detail' conv.pk %}" class="text-decoration-none">
+      <div class="card mb-2 shadow-sm border-0 {% if conv.unread_count > 0 %}border-start border-4 border-primary{% endif %}">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <strong>
+                {% if conv.buyer == request.user %}
+                  {{ conv.merchant.business_name|default:conv.merchant.username }}
+                {% else %}
+                  {{ conv.buyer.username }}
+                {% endif %}
+              </strong>
+              {% if conv.lot %}
+                <small class="text-muted d-block">{{ conv.lot.variety.name }}</small>
+              {% endif %}
+              {% if conv.last_message %}
+                <p class="mb-0 text-muted small">{{ conv.last_message.body|truncatechars:60 }}</p>
+              {% endif %}
+            </div>
+            <div class="text-end">
+              {% if conv.unread_count > 0 %}
+                <span class="badge bg-primary">{{ conv.unread_count }}</span>
+              {% endif %}
+              <small class="text-muted d-block">{{ conv.last_message_at|timesince }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  {% empty %}
+    <p class="text-muted">{% trans "No conversations yet. Browse lots and click 'Contact Merchant' to start one." %}</p>
+  {% endfor %}
+</div>
+{% endblock %}

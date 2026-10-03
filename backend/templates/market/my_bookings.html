@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "My Bookings" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-3">{% trans "My Bookings" %}</h1>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>{% trans "Variety" %}</th>
+          <th>{% trans "Mill" %}</th>
+          <th>{% trans "Quantity" %}</th>
+          <th>{% trans "Queue #" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Booked" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in bookings %}
+        <tr>
+          <td><a href="{% url 'market:lot_detail' booking.lot.pk %}">{{ booking.lot.variety.name }}</a></td>
+          <td>{{ booking.lot.mill.name }}</td>
+          <td>{{ booking.quantity_quintal }} q</td>
+          <td><span class="badge bg-primary">#{{ booking.queue_position }}</span></td>
+          <td>
+            {% if booking.status == "pending" %}
+              <span class="badge bg-warning text-dark">{% trans "Pending" %}</span>
+            {% elif booking.status == "confirmed" %}
+              <span class="badge bg-success">{% trans "Confirmed" %}</span>
+            {% elif booking.status == "completed" %}
+              <span class="badge bg-info">{% trans "Completed" %}</span>
+            {% else %}
+              <span class="badge bg-secondary">{% trans "Cancelled" %}</span>
+            {% endif %}
+          </td>
+          <td>{{ booking.created_at|date:"d M Y" }}</td>
+          <td>
+            {% if booking.status == "completed" %}
+              <a href="{% url 'market:rate_booking' booking.pk %}" class="btn btn-sm btn-outline-warning">
+                <i class="bi bi-star"></i> {% trans "Rate" %}
+              </a>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" class="text-center text-muted">{% trans "No bookings yet." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

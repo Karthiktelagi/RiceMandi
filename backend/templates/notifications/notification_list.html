@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Notifications" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 800px;">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">{% trans "Notifications" %}</h1>
+    {% if unread_count > 0 %}
+      <a href="{% url 'notifications:mark_all_read' %}" class="btn btn-outline-success btn-sm">{% trans "Mark all as read" %}</a>
+    {% endif %}
+  </div>
+
+  {% for notification in notifications %}
+    <div class="card mb-2 shadow-sm border-0 {% if not notification.is_read %}border-start border-4 border-success{% endif %}">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              {% if notification.kind == "price_drop" %}
+                <i class="bi bi-graph-down-arrow text-success"></i>
+              {% elif notification.kind == "new_lot" %}
+                <i class="bi bi-box-seam text-primary"></i>
+              {% elif notification.kind == "enquiry" %}
+                <i class="bi bi-question-circle text-warning"></i>
+              {% elif notification.kind == "message" %}
+                <i class="bi bi-chat-dots text-info"></i>
+              {% elif notification.kind == "approval" %}
+                <i class="bi bi-patch-check-fill text-success"></i>
+              {% else %}
+                <i class="bi bi-bell text-secondary"></i>
+              {% endif %}
+              <strong>{{ notification.title }}</strong>
+            </div>
+            <p class="mb-1">{{ notification.body }}</p>
+            <small class="text-muted">{{ notification.created_at|timesince }} {% trans "ago" %}</small>
+          </div>
+          <div class="d-flex gap-1">
+            {% if not notification.is_read %}
+              <a href="{% url 'notifications:mark_read' notification.pk %}" class="btn btn-sm btn-outline-success">{% trans "Mark read" %}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted">{% trans "No notifications yet." %}</p>
+  {% endfor %}
+</div>
+{% endblock %}

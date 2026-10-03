@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Mills" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-3">{% trans "Mills" %}</h1>
+  <div class="list-group">
+    {% for mill in mills %}
+      <div class="list-group-item">
+        <h5 class="mb-1">{{ mill.name }}</h5>
+        <p class="mb-1 text-muted">{{ mill.location }}, {{ mill.state }}</p>
+      </div>
+    {% empty %}
+      <p class="text-muted">{% trans "No mills available." %}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

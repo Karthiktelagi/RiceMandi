@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ variety.name }}{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h3 mb-3">{{ variety.name }}</h1>
+  <p class="text-muted">{{ variety.get_category_display }} • {{ variety.get_grade_display }}</p>
+  {% if variety.description %}<p>{{ variety.description }}</p>{% endif %}
+
+  {% if trend_data %}
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-white">
+      <h5 class="mb-0"><i class="bi bi-graph-up"></i> {% trans "Price Trend (30 days)" %}</h5>
+    </div>
+    <div class="card-body">
+      <canvas id="trendChart" height="200"></canvas>
+    </div>
+  </div>
+  {% endif %}
+
+  <h2 class="h4 mt-4">{% trans "Live lots" %}</h2>
+  {% for lot in lots %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">₹{{ lot.price_per_quintal }}/quintal</h5>
+        <p class="card-text">
+          {% trans "Quantity" %}: {{ lot.quantity_quintal }} {% trans "quintal" %}<br>
+          {% trans "Mill" %}: {{ lot.mill.name }}<br>
+          {% trans "Merchant" %}: {{ lot.merchant.business_name|default:lot.merchant.username }}<br>
+          {% trans "Moisture" %}: {{ lot.moisture_pct }}% • {% trans "Broken" %}: {{ lot.broken_pct }}%
+        </p>
+        <a href="{% url 'market:lot_detail' lot.pk %}" class="btn btn-outline-success btn-sm">{% trans "View Lot" %}</a>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted">{% trans "No live lots available for this variety." %}</p>
+  {% endfor %}
+</div>
+
+{% if trend_data %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('trendChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: {{ trend_labels|safe }},
+      datasets: [
+        {
+          label: '{% trans "Avg Price" %}',
+          data: {{ trend_avg|safe }},
+          borderColor: '#1f7a3d',
+          backgroundColor: 'rgba(31, 122, 61, 0.1)',
+          fill: true,
+          tension: 0.3,
+        },
+        {
+          label: '{% trans "Min Price" %}',
+          data: {{ trend_min|safe }},
+          borderColor: '#dc3545',
+          borderDash: [5, 5],
+          fill: false,
+          tension: 0.3,
+        },
+        {
+          label: '{% trans "Max Price" %}',
+          data: {{ trend_max|safe }},
+          borderColor: '#0d6efd',
+          borderDash: [5, 5],
+          fill: false,
+          tension: 0.3,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      scales: {
+        y: {
+          title: { display: true, text: '₹/quintal' },
+        },
+      },
+    },
+  });
+});
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Pending Verification" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="alert alert-warning" role="alert">
+    <h4 class="alert-heading">{% trans "Account pending verification" %}</h4>
+    <p>{% trans "Your merchant account is awaiting admin approval. You'll be able to post lots once approved." %}</p>
+    <hr>
+    <p class="mb-0">{% trans "Please contact the admin for assistance." %}</p>
+  </div>
+</div>
+{% endblock %}

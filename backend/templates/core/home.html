@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Today's rates" %} · {% trans "RiceMandi" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <div class="p-4 p-md-5 rounded-3 bg-success bg-opacity-10 mb-4">
+    <h1 class="display-6 fw-bold">{% trans "Today's rates at the APMMC yard" %}</h1>
+    <p class="lead text-muted mb-0">
+      {% trans "Merchants post live lots. Buyers see today's rate for every variety without walking the yard." %}
+    </p>
+  </div>
+
+  {% if varieties %}
+    <div class="row g-3 mb-4">
+      {% for variety in varieties %}
+        <div class="col-sm-6 col-lg-4 col-xl-3">
+          <a href="{% url 'market:variety_detail' variety.pk %}" class="text-decoration-none">
+            <div class="card h-100 border-0 shadow-sm lot-card">
+              <div class="card-body">
+                <h6 class="card-title mb-1 text-dark">{{ variety.name }}</h6>
+                <p class="text-muted small mb-2">{{ variety.get_category_display }}</p>
+                <div class="price">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted small">{% trans "Min" %}</span>
+                    <span class="price-amount">₹{{ variety.min_price|floatformat:2 }}</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted small">{% trans "Max" %}</span>
+                    <span class="price-amount">₹{{ variety.max_price|floatformat:2 }}</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center border-top pt-2 mt-2">
+                    <span class="fw-semibold small">{% trans "Avg" %}</span>
+                    <span class="price-amount fw-bold">₹{{ variety.avg_price|floatformat:2 }}</span>
+                  </div>
+                </div>
+                <small class="text-muted d-block mt-2">{{ variety.lot_count }} {% trans "lot" %}{{ variety.lot_count|pluralize }}</small>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info" role="alert">
+      <i class="bi bi-info-circle"></i>
+      {% trans "No live rates available yet. Merchants will post lots soon." %}
+    </div>
+  {% endif %}
+
+  {% if featured_lots %}
+    <h2 class="h4 mt-5 mb-3">{% trans "Featured lots" %}</h2>
+    <div class="row g-3">
+      {% for lot in featured_lots %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ lot.variety.name }}</h5>
+              <h6 class="card-subtitle mb-2 text-success">₹{{ lot.price_per_quintal }}/quintal</h6>
+              <p class="card-text small text-muted">
+                {% trans "Quantity" %}: {{ lot.quantity_quintal }} q • {% trans "Mill" %}: {{ lot.mill.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

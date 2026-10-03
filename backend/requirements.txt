@@ -1,0 +1,13 @@
+# RiceMandi backend dependencies.
+# Versions pinned to what is installed in the local venv so dev and prod match.
+
+Django==5.2.17
+pillow==12.3.0
+djangorestframework==3.18.1
+django-filter==26.1
+whitenoise==6.12.0
+dj-database-url==3.1.2
+python-decouple==3.8
+sqlparse==0.6.0
+asgiref==3.12.1
+tzdata==2026.4

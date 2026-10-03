@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign up" %}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h1 class="h3 mb-3 text-center">{% trans "Create an account" %}</h1>
+          <form method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
+            <div class="mb-3">
+              <label for="{{ form.username.id_for_label }}" class="form-label">{% trans "Username" %}</label>
+              <input type="text" name="{{ form.username.name }}" class="form-control" id="{{ form.username.id_for_label }}" value="{{ form.username.value|default:'' }}" required>
+              {% if form.username.errors %}
+                <div class="text-danger small">{{ form.username.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.email.id_for_label }}" class="form-label">{% trans "Email" %}</label>
+              <input type="email" name="{{ form.email.name }}" class="form-control" id="{{ form.email.id_for_label }}" value="{{ form.email.value|default:'' }}">
+              {% if form.email.errors %}
+                <div class="text-danger small">{{ form.email.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.phone.id_for_label }}" class="form-label">{% trans "Phone number" %}</label>
+              <input type="tel" name="{{ form.phone.name }}" class="form-control" id="{{ form.phone.id_for_label }}" value="{{ form.phone.value|default:'' }}" required>
+              {% if form.phone.errors %}
+                <div class="text-danger small">{{ form.phone.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.role.id_for_label }}" class="form-label">{% trans "I am a" %}</label>
+              <select name="{{ form.role.name }}" class="form-select" id="{{ form.role.id_for_label }}">
+                {% for value, label in form.role.field.choices %}
+                  <option value="{{ value }}" {% if form.role.value == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+              {% if form.role.errors %}
+                <div class="text-danger small">{{ form.role.errors }}</div>
+              {% endif %}
+            </div>
+            <div id="merchant-fields">
+              <div class="mb-3">
+                <label for="{{ form.business_name.id_for_label }}" class="form-label">{% trans "Business name" %}</label>
+                <input type="text" name="{{ form.business_name.name }}" class="form-control" id="{{ form.business_name.id_for_label }}" value="{{ form.business_name.value|default:'' }}">
+                {% if form.business_name.errors %}
+                  <div class="text-danger small">{{ form.business_name.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.gst_number.id_for_label }}" class="form-label">{% trans "GST number" %}</label>
+                <input type="text" name="{{ form.gst_number.name }}" class="form-control" id="{{ form.gst_number.id_for_label }}" value="{{ form.gst_number.value|default:'' }}">
+                {% if form.gst_number.errors %}
+                  <div class="text-danger small">{{ form.gst_number.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.password1.id_for_label }}" class="form-label">{% trans "Password" %}</label>
+              <input type="password" name="{{ form.password1.name }}" class="form-control" id="{{ form.password1.id_for_label }}" required>
+              {% if form.password1.errors %}
+                <div class="text-danger small">{{ form.password1.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.password2.id_for_label }}" class="form-label">{% trans "Confirm password" %}</label>
+              <input type="password" name="{{ form.password2.name }}" class="form-control" id="{{ form.password2.id_for_label }}" required>
+              {% if form.password2.errors %}
+                <div class="text-danger small">{{ form.password2.errors }}</div>
+              {% endif %}
+            </div>
+            <button type="submit" class="btn btn-success w-100">{% trans "Sign up" %}</button>
+          </form>
+          <div class="text-center mt-3">
+            <small>{% trans "Already have an account?" %} <a href="{% url 'accounts:login' %}">{% trans "Log in" %}</a></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const roleSelect = document.getElementById("{{ form.role.id_for_label }}");
+  const merchantFields = document.getElementById("merchant-fields");
+  function toggleMerchant() {
+    if (roleSelect.value === "merchant") {
+      merchantFields.style.display = "";
+    } else {
+      merchantFields.style.display = "none";
+    }
+  }
+  roleSelect.addEventListener("change", toggleMerchant);
+  toggleMerchant();
+</script>
+{% endblock %}
