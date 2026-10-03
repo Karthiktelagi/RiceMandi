@@ -46,6 +46,7 @@ def home(request):
     """Home page - Rate board showing live rates per variety."""
     from django.db.models import Avg, Max, Min, Q
 
+    from apps.accounts.models import User
     from apps.market.models import Lot, Variety, PriceRecord
 
     # Get active varieties with live lots
@@ -69,9 +70,17 @@ def home(request):
     # Get recent price updates
     recent_updates = PriceRecord.objects.select_related("variety").order_by("-recorded_at")[:10]
 
+    # Stats
+    total_varieties = Variety.objects.filter(is_active=True).count()
+    total_lots = Lot.objects.filter(status=Lot.STATUS_ACTIVE, is_available=True).count()
+    total_merchants = User.objects.filter(role=User.ROLE_MERCHANT, is_approved=True).count()
+
     context = {
         "varieties": varieties,
         "featured_lots": featured_lots,
         "recent_updates": recent_updates,
+        "total_varieties": total_varieties,
+        "total_lots": total_lots,
+        "total_merchants": total_merchants,
     }
     return render(request, "core/home.html", context)

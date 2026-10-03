@@ -1,11 +1,61 @@
-{% load i18n %}
-<footer class="border-top bg-white mt-5 py-4">
-  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-    <span class="text-muted small">
-      {% trans "RiceMandi — live rates at the APMMC yard." %}
-    </span>
-    <span class="text-muted small">
-      {% trans "Price per quintal, as quoted in the yard." %}
-    </span>
+{% load i18n static %}
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="footer-brand">
+          <img src="{% static 'img/logo-white.svg' %}" alt="RiceMandi" height="40">
+        </div>
+        <p class="text-white-50">
+          {% trans "India's first dedicated B2B rice marketplace with live APMC rates, first-come-first-serve queue booking, and in-app price negotiation." %}
+        </p>
+        <div class="d-flex gap-3">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook fs-5"></i></a>
+          <a href="#" aria-label="Twitter"><i class="bi bi-twitter fs-5"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin fs-5"></i></a>
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram fs-5"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-white mb-3">{% trans "Platform" %}</h6>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'core:home' %}">{% trans "Home" %}</a></li>
+          <li><a href="{% url 'market:variety_list' %}">{% trans "Varieties" %}</a></li>
+          <li><a href="{% url 'market:mill_list' %}">{% trans "Mills" %}</a></li>
+          <li><a href="{% url 'market:my_bookings' %}">{% trans "My Bookings" %}</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-white mb-3">{% trans "Account" %}</h6>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'accounts:login' %}">{% trans "Log in" %}</a></li>
+          <li><a href="{% url 'accounts:signup' %}">{% trans "Sign up" %}</a></li>
+          <li><a href="{% url 'accounts:dashboard' %}">{% trans "Dashboard" %}</a></li>
+          <li><a href="{% url 'notifications:list' %}">{% trans "Notifications" %}</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-white mb-3">{% trans "Support" %}</h6>
+        <ul class="list-unstyled">
+          <li><a href="#">{% trans "Help Center" %}</a></li>
+          <li><a href="#">{% trans "Contact Us" %}</a></li>
+          <li><a href="#">{% trans "API Docs" %}</a></li>
+          <li><a href="#">{% trans "Status" %}</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-white mb-3">{% trans "Legal" %}</h6>
+        <ul class="list-unstyled">
+          <li><a href="#">{% trans "Privacy Policy" %}</a></li>
+          <li><a href="#">{% trans "Terms of Service" %}</a></li>
+          <li><a href="#">{% trans "Refund Policy" %}</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-secondary my-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <small class="text-white-50">{% trans "© 2026 RiceMandi. All rights reserved." %}</small>
+      <small class="text-white-50">{% trans "Made with ❤️ in Karnataka, India" %}</small>
+    </div>
   </div>
 </footer>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <!-- Basket icon -->
+  <g filter="url(#shadow)">
+    <path d="M20 25 L60 25 L55 50 L25 50 Z" fill="#fff" rx="3"/>
+    <path d="M22 25 L30 12 L50 12 L58 25" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="30" y1="32" x2="50" y2="32" stroke="#1f7a3d" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <line x1="28" y1="38" x2="52" y2="38" stroke="#1f7a3d" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <line x1="26" y1="44" x2="54" y2="44" stroke="#1f7a3d" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  </g>
+  <!-- Rice grains -->
+  <g fill="#ffc107">
+    <ellipse cx="35" cy="18" rx="3" ry="5" transform="rotate(-15 35 18)"/>
+    <ellipse cx="42" cy="16" rx="3" ry="5" transform="rotate(10 42 16)"/>
+    <ellipse cx="49" cy="18" rx="3" ry="5" transform="rotate(-5 49 18)"/>
+  </g>
+  <!-- Text -->
+  <text x="70" y="38" font-family="Inter,Segoe UI,sans-serif" font-size="22" font-weight="700" fill="#fff">Rice<tspan fill="#ffc107">Mandi</tspan></text>
+  <text x="70" y="52" font-family="Inter,Segoe UI,sans-serif" font-size="8" font-weight="500" fill="#fff" letter-spacing="1.5" opacity="0.8">APMC LIVE RATES</text>
+</svg>

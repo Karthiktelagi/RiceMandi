@@ -1,73 +1,457 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans "Today's rates" %} · {% trans "RiceMandi" %}{% endblock %}
+{% block title %}{% trans "RiceMandi — Live APMC Rice Rates" %}{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(135deg, #1f7a3d 0%, #2d9a4e 50%, #1a6b35 100%);
+    color: #fff;
+    padding: 80px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,193,7,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 6s ease-in-out infinite reverse;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .hero .lead {
+    font-size: 1.25rem;
+    opacity: 0.95;
+    max-width: 600px;
+  }
+  .hero-logo {
+    max-width: 280px;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge .dot {
+    width: 8px;
+    height: 8px;
+    background: #ffc107;
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Stats */
+  .stats-bar {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    padding: 2rem;
+    margin-top: -50px;
+    position: relative;
+    z-index: 2;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 1rem;
+  }
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1f7a3d;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.5rem;
+  }
+
+  /* Variety Cards */
+  .variety-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e9ecef;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+  .variety-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    border-color: #1f7a3d;
+  }
+  .variety-card .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f7a3d;
+  }
+  .variety-card .price-change {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .price-up { color: #dc3545; }
+  .price-down { color: #1f7a3d; }
+
+  /* Features */
+  .feature-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e9ecef;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  }
+  .feature-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.75rem;
+  }
+  .feature-icon.green { background: #e8f5e9; color: #1f7a3d; }
+  .feature-icon.yellow { background: #fff8e1; color: #ffc107; }
+  .feature-icon.blue { background: #e3f2fd; color: #0d6efd; }
+  .feature-icon.purple { background: #f3e5f5; color: #6f42c1; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, #1f7a3d 0%, #2d9a4e 100%);
+    border-radius: 24px;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,193,7,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Live indicator */
+  .live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #dc3545;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .live-indicator .dot {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  /* Section title */
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .section-subtitle {
+    color: #6c757d;
+    font-size: 1.1rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .hero { padding: 60px 0 80px; }
+    .stats-bar { margin-top: -30px; padding: 1.5rem; }
+    .stat-number { font-size: 1.75rem; }
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-
-  <div class="p-4 p-md-5 rounded-3 bg-success bg-opacity-10 mb-4">
-    <h1 class="display-6 fw-bold">{% trans "Today's rates at the APMMC yard" %}</h1>
-    <p class="lead text-muted mb-0">
-      {% trans "Merchants post live lots. Buyers see today's rate for every variety without walking the yard." %}
-    </p>
-  </div>
-
-  {% if varieties %}
-    <div class="row g-3 mb-4">
-      {% for variety in varieties %}
-        <div class="col-sm-6 col-lg-4 col-xl-3">
-          <a href="{% url 'market:variety_detail' variety.pk %}" class="text-decoration-none">
-            <div class="card h-100 border-0 shadow-sm lot-card">
-              <div class="card-body">
-                <h6 class="card-title mb-1 text-dark">{{ variety.name }}</h6>
-                <p class="text-muted small mb-2">{{ variety.get_category_display }}</p>
-                <div class="price">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-muted small">{% trans "Min" %}</span>
-                    <span class="price-amount">₹{{ variety.min_price|floatformat:2 }}</span>
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-muted small">{% trans "Max" %}</span>
-                    <span class="price-amount">₹{{ variety.max_price|floatformat:2 }}</span>
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center border-top pt-2 mt-2">
-                    <span class="fw-semibold small">{% trans "Avg" %}</span>
-                    <span class="price-amount fw-bold">₹{{ variety.avg_price|floatformat:2 }}</span>
-                  </div>
-                </div>
-                <small class="text-muted d-block mt-2">{{ variety.lot_count }} {% trans "lot" %}{{ variety.lot_count|pluralize }}</small>
-              </div>
-            </div>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container hero-content">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <div class="hero-badge fade-in">
+          <span class="dot"></span>
+          <span>{% trans "Live Market Data" %}</span>
+        </div>
+        <h1 class="fade-in">{% trans "Rice & Paddy Rates at Your Fingertips" %}</h1>
+        <p class="lead fade-in">
+          {% trans "India's first dedicated B2B rice marketplace with live APMC rates, first-come-first-serve queue booking, and in-app price negotiation." %}
+        </p>
+        <div class="d-flex gap-3 mt-4 flex-wrap fade-in">
+          <a href="{% url 'market:variety_list' %}" class="btn btn-light btn-lg px-4">
+            <i class="bi bi-graph-up"></i> {% trans "View Live Rates" %}
+          </a>
+          <a href="{% url 'accounts:signup' %}" class="btn btn-outline-light btn-lg px-4">
+            {% trans "Join Free" %} <i class="bi bi-arrow-right"></i>
           </a>
         </div>
-      {% endfor %}
+      </div>
+      <div class="col-lg-5 text-center d-none d-lg-block">
+        <img src="{% static 'img/logo-white.svg' %}" alt="RiceMandi" class="hero-logo">
+      </div>
     </div>
-  {% else %}
-    <div class="alert alert-info" role="alert">
-      <i class="bi bi-info-circle"></i>
-      {% trans "No live rates available yet. Merchants will post lots soon." %}
-    </div>
-  {% endif %}
+  </div>
+</section>
 
-  {% if featured_lots %}
-    <h2 class="h4 mt-5 mb-3">{% trans "Featured lots" %}</h2>
-    <div class="row g-3">
-      {% for lot in featured_lots %}
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">{{ lot.variety.name }}</h5>
-              <h6 class="card-subtitle mb-2 text-success">₹{{ lot.price_per_quintal }}/quintal</h6>
-              <p class="card-text small text-muted">
-                {% trans "Quantity" %}: {{ lot.quantity_quintal }} q • {% trans "Mill" %}: {{ lot.mill.name }}
-              </p>
-            </div>
+<!-- Stats Bar -->
+<div class="container">
+  <div class="stats-bar slide-up">
+    <div class="row g-4">
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <div class="stat-number">{{ total_varieties|default:"50" }}</div>
+          <div class="stat-label">{% trans "Rice Varieties" %}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <div class="stat-number">{{ total_lots|default:"0" }}</div>
+          <div class="stat-label">{% trans "Live Lots" %}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <div class="stat-number">{{ total_merchants|default:"0" }}</div>
+          <div class="stat-label">{% trans "Verified Merchants" %}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">{% trans "Live Updates" %}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Live Rates Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="section-title">{% trans "Today's Rates" %}</h2>
+        <p class="section-subtitle mb-0">{% trans "Live prices from APMC yards across Karnataka" %}</p>
+      </div>
+      <span class="live-indicator">
+        <span class="dot"></span> {% trans "LIVE" %}
+      </span>
+    </div>
+
+    <div class="row g-4">
+      {% for variety in varieties %}
+      <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="variety-card">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="mb-0">{{ variety.name }}</h5>
+            <span class="badge bg-light text-dark">{{ variety.get_category_display }}</span>
+          </div>
+          <div class="price">₹{{ variety.avg_price|default:"—" }}<small class="fs-6 text-muted">/q</small></div>
+          <div class="d-flex justify-content-between mt-2">
+            <small class="text-muted">{% trans "Min" %}: ₹{{ variety.min_price|default:"—" }}</small>
+            <small class="text-muted">{% trans "Max" %}: ₹{{ variety.max_price|default:"—" }}</small>
+          </div>
+          <div class="mt-2">
+            <small class="text-muted">{{ variety.lot_count }} {% trans "lots available" %}</small>
           </div>
         </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <i class="bi bi-inbox fs-1 text-muted"></i>
+        <p class="text-muted mt-3">{% trans "No live rates available yet. Check back soon!" %}</p>
+      </div>
       {% endfor %}
     </div>
-  {% endif %}
 
-</div>
+    <div class="text-center mt-4">
+      <a href="{% url 'market:variety_list' %}" class="btn btn-outline-success">
+        {% trans "View All Varieties" %} <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">{% trans "Why RiceMandi?" %}</h2>
+      <p class="section-subtitle">{% trans "India's most trusted B2B rice trading platform" %}</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+          <div class="feature-icon green">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+          <h5>{% trans "Live APMC Rates" %}</h5>
+          <p class="text-muted mb-0">{% trans "Real-time prices from yards across Karnataka. No delays, no middlemen." %}</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+          <div class="feature-icon yellow">
+            <i class="bi bi-clock-history"></i>
+          </div>
+          <h5>{% trans "First-Come-First-Serve" %}</h5>
+          <p class="text-muted mb-0">{% trans "Transparent queue booking system. Join the queue, get your turn." %}</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+          <div class="feature-icon blue">
+            <i class="bi bi-hand-thumbs-up"></i>
+          </div>
+          <h5>{% trans "In-App Negotiation" %}</h5>
+          <p class="text-muted mb-0">{% trans "Negotiate prices directly with merchants. Counter-offers in real-time." %}</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+          <div class="feature-icon purple">
+            <i class="bi bi-basket2-fill"></i>
+          </div>
+          <h5>{% trans "Packet Pricing" %}</h5>
+          <p class="text-muted mb-0">{% trans "Auto-calculated packet rates (1 packet = 26 kg). No manual math." %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Lots -->
+{% if featured_lots %}
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="section-title">{% trans "Featured Lots" %}</h2>
+        <p class="section-subtitle mb-0">{% trans "Hand-picked premium lots from verified merchants" %}</p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      {% for lot in featured_lots %}
+      <div class="col-md-6 col-lg-4">
+        <div class="variety-card">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="mb-0">{{ lot.variety.name }}</h5>
+            <span class="badge bg-success">{% trans "Featured" %}</span>
+          </div>
+          <div class="price">₹{{ lot.price_per_quintal }}<small class="fs-6 text-muted">/q</small></div>
+          <p class="text-muted mb-2">
+            <i class="bi bi-building"></i> {{ lot.mill.name }}<br>
+            <i class="bi bi-person"></i> {{ lot.merchant.business_name|default:lot.merchant.username }}
+          </p>
+          <a href="{% url 'market:lot_detail' lot.pk %}" class="btn btn-outline-success btn-sm w-100">
+            {% trans "View & Book" %}
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="cta-section">
+      <h2 class="mb-3">{% trans "Start Trading Today" %}</h2>
+      <p class="lead mb-4 opacity-75">{% trans "Join thousands of merchants and buyers on India's most trusted rice marketplace." %}</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="{% url 'accounts:signup' %}" class="btn btn-light btn-lg px-5">
+          {% trans "Create Free Account" %}
+        </a>
+        <a href="{% url 'market:variety_list' %}" class="btn btn-outline-light btn-lg px-5">
+          {% trans "Browse Varieties" %}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
