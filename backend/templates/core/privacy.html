@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Privacy Policy" %} — RiceMandi{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+      <h1 class="h2 fw-bold mb-4">{% trans "Privacy Policy" %}</h1>
+      <p class="text-muted mb-4">{% trans "Last updated: October 2026" %}</p>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 p-md-5">
+          <h5 class="fw-bold">1. {% trans "Information We Collect" %}</h5>
+          <p class="text-muted">{% trans "We collect information you provide directly to us, such as when you create an account, post a lot, or contact us for support. This may include:" %}</p>
+          <ul class="text-muted">
+            <li>{% trans "Name, email address, and phone number" %}</li>
+            <li>{% trans "Business name and GST number (for merchants)" %}</li>
+            <li>{% trans "Profile photo and other optional information" %}</li>
+            <li>{% trans "Transaction and payment information" %}</li>
+          </ul>
+
+          <h5 class="fw-bold">2. {% trans "How We Use Your Information" %}</h5>
+          <p class="text-muted">{% trans "We use the information we collect to:" %}</p>
+          <ul class="text-muted">
+            <li>{% trans "Provide, maintain, and improve our services" %}</li>
+            <li>{% trans "Process transactions and send related information" %}</li>
+            <li>{% trans "Send you technical notices and support messages" %}</li>
+            <li>{% trans "Respond to your comments and questions" %}</li>
+            <li>{% trans "Personalize your experience on the platform" %}</li>
+          </ul>
+
+          <h5 class="fw-bold">3. {% trans "Information Sharing" %}</h5>
+          <p class="text-muted">{% trans "We do not sell, trade, or otherwise transfer your personal information to outside parties except in the following cases:" %}</p>
+          <ul class="text-muted">
+            <li>{% trans "With your consent" %}</li>
+            <li>{% trans "To comply with legal obligations" %}</li>
+            <li>{% trans "To protect our rights, property, or safety" %}</li>
+            <li>{% trans "With service providers who assist us in operating our platform" %}</li>
+          </ul>
+
+          <h5 class="fw-bold">4. {% trans "Data Security" %}</h5>
+          <p class="text-muted">{% trans "We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security." %}</p>
+
+          <h5 class="fw-bold">5. {% trans "Data Retention" %}</h5>
+          <p class="text-muted">{% trans "We retain your personal information for as long as your account is active or as needed to provide you services. We may also retain and use your information as necessary to comply with legal obligations, resolve disputes, and enforce our agreements." %}</p>
+
+          <h5 class="fw-bold">6. {% trans "Your Rights" %}</h5>
+          <p class="text-muted">{% trans "You have the right to:" %}</p>
+          <ul class="text-muted">
+            <li>{% trans "Access and review your personal information" %}</li>
+            <li>{% trans "Update or correct inaccurate information" %}</li>
+            <li>{% trans "Request deletion of your account and data" %}</li>
+            <li>{% trans "Opt out of marketing communications" %}</li>
+          </ul>
+
+          <h5 class="fw-bold">7. {% trans "Cookies" %}</h5>
+          <p class="text-muted">{% trans "We use cookies and similar technologies to enhance your experience, analyze trends, and administer the site. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent." %}</p>
+
+          <h5 class="fw-bold">8. {% trans "Third-Party Links" %}</h5>
+          <p class="text-muted">{% trans "Our platform may contain links to third-party websites. We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party sites you visit." %}</p>
+
+          <h5 class="fw-bold">9. {% trans "Children's Privacy" %}</h5>
+          <p class="text-muted">{% trans "Our service is not intended for individuals under the age of 18. We do not knowingly collect personal information from children under 18. If we become aware that we have collected such information, we will take steps to delete it." %}</p>
+
+          <h5 class="fw-bold">10. {% trans "Changes to This Policy" %}</h5>
+          <p class="text-muted">{% trans "We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the 'last updated' date." %}</p>
+
+          <h5 class="fw-bold">11. {% trans "Contact Us" %}</h5>
+          <p class="text-muted">{% trans "If you have any questions about this Privacy Policy, please contact us at privacy@ricemandi.com." %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

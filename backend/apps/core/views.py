@@ -84,3 +84,13 @@ def home(request):
         "total_merchants": total_merchants,
     }
     return render(request, "core/home.html", context)
+
+
+def terms(request):
+    """Terms of Service page."""
+    return render(request, "core/terms.html")
+
+
+def privacy(request):
+    """Privacy Policy page."""
+    return render(request, "core/privacy.html")

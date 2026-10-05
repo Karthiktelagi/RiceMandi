@@ -49,9 +49,8 @@
           <h5 class="mb-0"><i class="bi bi-clock-history"></i> {% trans "Recent Bookings" %}</h5>
         </div>
         <div class="card-body">
-          {% with recent_bookings=user.lots.first.bookings.all|slice:":5" %}
-          {% for booking in recent_bookings %}
-            <div class="d-flex justify-content-between align-items-center mb-2">
+          {% for booking in user.lots.first.bookings.all|slice:":5" %}
+            <div class="d-flex justify-content-between align-items-center mb-3">
               <div>
                 <strong>{{ booking.buyer.username }}</strong>
                 <small class="text-muted d-block">{{ booking.lot.variety.name }} — {{ booking.quantity_quintal }} q</small>
@@ -62,7 +61,7 @@
             </div>
           {% empty %}
             <p class="text-muted text-center mb-0">{% trans "No bookings yet." %}</p>
-          {% endwith %}
+          {% endfor %}
         </div>
         <div class="card-footer bg-white text-center">
           <a href="{% url 'market:merchant_bookings' %}" class="btn btn-outline-success btn-sm">{% trans "Manage Bookings" %}</a>

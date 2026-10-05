@@ -6,13 +6,23 @@ Local dev uses SQLite; production swaps in Postgres via DATABASE_URL.
 """
 
 import os
+import sys
 from pathlib import Path
 
 import dj_database_url
 from decouple import config
+from django.core.exceptions import ImproperlyConfigured
+
+# True while `manage.py test` is running. Several settings below branch on it,
+# most importantly static file storage: the manifest backend raises
+# "Missing staticfiles manifest entry" for every {% static %} tag because no
+# collectstatic has run against the throwaway test database.
+TESTING = "test" in sys.argv or bool(os.environ.get("PYTEST_CURRENT_TEST"))
 
 # backend/ -- the folder that gets deployed to Render
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+DEBUG = config("DEBUG", default=True, cast=bool)
 
 # Keep generated files out of version control.
 SECRET_KEY = config(
@@ -20,7 +30,14 @@ SECRET_KEY = config(
     default="django-insecure-l*p8d)pvhvg^6%yrb$s#ync6qvuc&j_l_$c39!4we+=^_@9rb!",
 )
 
-DEBUG = config("DEBUG", default=True, cast=bool)
+# The fallback key above is committed to git, so anyone could forge sessions and
+# CSRF tokens with it. Refuse to boot with it outside local development rather
+# than appearing to work.
+if not DEBUG and not TESTING and SECRET_KEY.startswith("django-insecure-"):
+    raise ImproperlyConfigured(
+        "SECRET_KEY must be set to a unique random value when DEBUG is False. "
+        "Generate one with: python -c \"import secrets; print(secrets.token_urlsafe(64))\""
+    )
 
 ALLOWED_HOSTS = [
     h.strip()
@@ -126,7 +143,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = "accounts:login"
-LOGIN_REDIRECT_URL = "accounts:dashboard"
+# Goes via accounts:profile because Google users have no phone number yet.
+# That view bounces straight to the dashboard once the profile is complete.
+LOGIN_REDIRECT_URL = "accounts:profile"
 LOGOUT_REDIRECT_URL = "core:home"
 
 # django-allauth
@@ -150,6 +169,19 @@ SOCIALACCOUNT_PROVIDERS = {
         "AUTH_PARAMS": {"access_type": "online"},
     }
 }
+
+# Google users arrive without a phone number or a role. This adapter fills in
+# safe defaults and leaves the rest to accounts:profile.
+SOCIALACCOUNT_ADAPTER = "apps.accounts.adapters.RiceMandiSocialAccountAdapter"
+# Create the account on the first Google sign-in instead of showing a form.
+SOCIALACCOUNT_AUTO_SIGNUP = True
+# Send the browser straight to Google on a GET. allauth otherwise renders an
+# unstyled "Sign In Via Google / Continue" interstitial, which reads like a
+# broken button on our themed login page.
+SOCIALACCOUNT_LOGIN_ON_GET = True
+# Google is only used to prove who you are. We never call a Google API, so the
+# OAuth access token is not worth keeping in the database.
+SOCIALACCOUNT_STORE_TOKENS = False
 
 
 # ------------------------------------------------------------ internationalization
@@ -182,7 +214,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    # Hashed filenames in production for far-future caching; plain lookups in
+    # tests, where no collectstatic manifest exists.
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+        if TESTING
+        else "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
 
 # Lot and variety photos: merchants upload from a phone on a yard connection.

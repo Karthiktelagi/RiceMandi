@@ -3,9 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
-from apps.accounts.forms import SignUpForm
+from apps.accounts.forms import ProfileForm, SignUpForm
 from apps.accounts.models import User
 
 
@@ -31,6 +31,38 @@ class SignUpView(CreateView):
 
 
 signup = SignUpView.as_view()
+
+
+class ProfileUpdateView(UpdateView):
+    """Let a signed-in user finish the fields Google could not supply.
+
+    Acts as the ``LOGIN_REDIRECT_URL`` so it must cope with two cases: a
+    complete profile (redirect straight on to the dashboard) and an incomplete
+    one, which is every Google sign-up until they save this form.
+    """
+
+    form_class = ProfileForm
+    template_name = "accounts/profile.html"
+    success_url = reverse_lazy("accounts:dashboard")
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.phone:
+            return super().get(request, *args, **kwargs)
+        return redirect(self.success_url)
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.object.role == User.ROLE_MERCHANT:
+            messages.info(
+                self.request,
+                _("Your merchant account is pending admin approval."),
+            )
+        else:
+            messages.success(self.request, _("Your profile has been updated."))
+        return response
 
 
 @login_required

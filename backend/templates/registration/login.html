@@ -6,43 +6,56 @@
 {% block content %}
 <div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-5 col-lg-4">
-      <div class="text-center mb-4">
-        <img src="{% static 'img/logo.svg' %}" alt="RiceMandi" height="50" class="mb-3">
-        <h1 class="h4 fw-bold">{% trans "Welcome back" %}</h1>
-        <p class="text-muted small">{% trans "Log in to your RiceMandi account" %}</p>
+    <div class="col-md-6 col-lg-5">
+      <div class="text-center mb-5">
+        <img src="{% static 'img/logo.svg' %}" alt="RiceMandi" height="60" class="mb-4">
+        <h1 class="h3 fw-bold mb-2">{% trans "Welcome back" %}</h1>
+        <p class="text-muted">{% trans "Log in to your RiceMandi account" %}</p>
       </div>
 
       <div class="card shadow-sm border-0">
-        <div class="card-body p-4">
+        <div class="card-body p-4 p-md-5">
+          {% if google_login_enabled %}
+          <a href="{% url 'google_login' %}?process=login" class="btn btn-outline-dark w-100 mb-3 d-flex align-items-center justify-content-center gap-2">
+            <i class="bi bi-google fs-5"></i>
+            <span>{% trans "Continue with Google" %}</span>
+          </a>
+
+          <div class="d-flex align-items-center my-3">
+            <hr class="flex-grow-1">
+            <span class="text-muted small mx-3">{% trans "or" %}</span>
+            <hr class="flex-grow-1">
+          </div>
+          {% endif %}
+
           <form method="post">
             {% csrf_token %}
-            <div class="mb-3">
-              <label for="id_username" class="form-label small fw-medium">{% trans "Username" %}</label>
-              <input type="text" name="username" id="id_username" class="form-control" placeholder="{% trans 'Enter username' %}" required autofocus>
+            <div class="mb-4">
+              <label for="id_username" class="form-label fw-medium">{% trans "Username" %}</label>
+              <input type="text" name="username" id="id_username" class="form-control form-control-lg" placeholder="{% trans 'Enter username' %}" required autofocus>
             </div>
-            <div class="mb-3">
-              <label for="id_password" class="form-label small fw-medium">{% trans "Password" %}</label>
+            <div class="mb-4">
+              <label for="id_password" class="form-label fw-medium">{% trans "Password" %}</label>
               <div class="input-group">
-                <input type="password" name="password" id="id_password" class="form-control" placeholder="{% trans 'Enter password' %}" required>
+                <input type="password" name="password" id="id_password" class="form-control form-control-lg" placeholder="{% trans 'Enter password' %}" required>
                 <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('id_password', this)" aria-label="{% trans 'Show password' %}">
                   <i class="bi bi-eye"></i>
                 </button>
               </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
               <div class="form-check">
                 <input type="checkbox" name="remember" id="remember" class="form-check-input">
-                <label for="remember" class="form-check-label small">{% trans "Remember me" %}</label>
+                <label for="remember" class="form-check-label">{% trans "Remember me" %}</label>
               </div>
-              <a href="#" class="small text-decoration-none">{% trans "Forgot password?" %}</a>
+              <a href="#" class="text-decoration-none">{% trans "Forgot password?" %}</a>
             </div>
-            <button type="submit" class="btn btn-success w-100 py-2">{% trans "Log in" %}</button>
+            <button type="submit" class="btn btn-success w-100 py-3 btn-lg">{% trans "Log in" %}</button>
           </form>
         </div>
       </div>
 
-      <p class="text-center text-muted small mt-3">
+      <p class="text-center text-muted mt-4">
         {% trans "Don't have an account?" %} <a href="{% url 'accounts:signup' %}" class="text-success fw-medium">{% trans "Sign up" %}</a>
       </p>
     </div>
@@ -50,6 +63,7 @@
 </div>
 {% endblock %}
 
+{% block extra_js %}
 <script>
 function togglePassword(fieldId, btn) {
   const field = document.getElementById(fieldId);
@@ -65,3 +79,4 @@ function togglePassword(fieldId, btn) {
   }
 }
 </script>
+{% endblock %}

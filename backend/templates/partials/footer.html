@@ -46,8 +46,8 @@
       <div class="col-6 col-lg-2">
         <h6 class="text-white mb-3">{% trans "Legal" %}</h6>
         <ul class="list-unstyled small">
-          <li class="mb-2"><a href="#" class="text-white-50">{% trans "Privacy Policy" %}</a></li>
-          <li class="mb-2"><a href="#" class="text-white-50">{% trans "Terms of Service" %}</a></li>
+          <li class="mb-2"><a href="{% url 'core:privacy' %}" class="text-white-50">{% trans "Privacy Policy" %}</a></li>
+          <li class="mb-2"><a href="{% url 'core:terms' %}" class="text-white-50">{% trans "Terms of Service" %}</a></li>
           <li class="mb-2"><a href="#" class="text-white-50">{% trans "Refund Policy" %}</a></li>
         </ul>
       </div>

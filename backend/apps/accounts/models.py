@@ -20,7 +20,11 @@ class User(AbstractUser):
         (LANG_ENGLISH, _("English")),
     )
 
-    phone = models.CharField(max_length=15, unique=True, db_index=True)
+    # Nullable on purpose: Google sign-ups never collect a phone number, and a
+    # non-null column would make every social user collide on the unique
+    # constraint. Multiple NULLs are allowed by SQLite and Postgres alike.
+    # Local sign-up still asks for a phone (see SignUpForm).
+    phone = models.CharField(max_length=15, unique=True, null=True, blank=True)
     role = models.CharField(max_length=16, choices=ROLE_CHOICES, default=ROLE_BUYER)
     is_approved = models.BooleanField(default=True, help_text=_("Merchants require admin approval"))
     business_name = models.CharField(max_length=150, blank=True)

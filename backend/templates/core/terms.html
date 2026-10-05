@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Terms of Service" %} — RiceMandi{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+      <h1 class="h2 fw-bold mb-4">{% trans "Terms of Service" %}</h1>
+      <p class="text-muted mb-4">{% trans "Last updated: October 2026" %}</p>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 p-md-5">
+          <h5 class="fw-bold">1. {% trans "Acceptance of Terms" %}</h5>
+          <p class="text-muted">{% trans "By accessing and using RiceMandi, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service." %}</p>
+
+          <h5 class="fw-bold">2. {% trans "Use License" %}</h5>
+          <p class="text-muted">{% trans "Permission is granted to temporarily access the materials on RiceMandi for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:" %}</p>
+          <ul class="text-muted">
+            <li>{% trans "Modify or copy the materials" %}</li>
+            <li>{% trans "Use the materials for any commercial purpose" %}</li>
+            <li>{% trans "Attempt to decompile or reverse engineer any software contained on RiceMandi" %}</li>
+            <li>{% trans "Remove any copyright or other proprietary notations from the materials" %}</li>
+          </ul>
+
+          <h5 class="fw-bold">3. {% trans "Account Responsibilities" %}</h5>
+          <p class="text-muted">{% trans "You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account." %}</p>
+
+          <h5 class="fw-bold">4. {% trans "Merchant Terms" %}</h5>
+          <p class="text-muted">{% trans "Merchants are subject to admin approval before they can post lots. RiceMandi reserves the right to approve or reject any merchant application. Merchants must provide accurate business information and comply with all applicable laws and regulations." %}</p>
+
+          <h5 class="fw-bold">5. {% trans "Payment and Commission" %}</h5>
+          <p class="text-muted">{% trans "RiceMandi may charge a commission on transactions processed through the platform. The applicable commission rates will be displayed on the platform. We reserve the right to modify commission rates with prior notice." %}</p>
+
+          <h5 class="fw-bold">6. {% trans "Prohibited Uses" %}</h5>
+          <p class="text-muted">{% trans "You may not use RiceMandi for any unlawful purpose or to engage in any activity that could harm the platform, its users, or third parties. This includes, but is not limited to:" %}</p>
+          <ul class="text-muted">
+            <li>{% trans "Fraudulent or deceptive practices" %}</li>
+            <li>{% trans "Money laundering or terrorist financing" %}</li>
+            <li>{% trans "Infringement of intellectual property rights" %}</li>
+            <li>{% trans "Harassment or abuse of other users" %}</li>
+          </ul>
+
+          <h5 class="fw-bold">7. {% trans "Limitation of Liability" %}</h5>
+          <p class="text-muted">{% trans "In no event shall RiceMandi or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on RiceMandi." %}</p>
+
+          <h5 class="fw-bold">8. {% trans "Governing Law" %}</h5>
+          <p class="text-muted">{% trans "These terms and conditions are governed by and construed in accordance with the laws of India and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location." %}</p>
+
+          <h5 class="fw-bold">9. {% trans "Changes to Terms" %}</h5>
+          <p class="text-muted">{% trans "RiceMandi reserves the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on this page and updating the 'last updated' date." %}</p>
+
+          <h5 class="fw-bold">10. {% trans "Contact Us" %}</h5>
+          <p class="text-muted">{% trans "If you have any questions about these Terms, please contact us at support@ricemandi.com." %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
