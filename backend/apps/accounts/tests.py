@@ -5,7 +5,9 @@ The Google cases drive allauth's *real* pipeline
 HTTP token exchange with Google, so the adapter, the unique phone index and the
 database writes are genuinely exercised.
 """
+from pathlib import Path
 from types import SimpleNamespace
+from unittest import mock
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.middleware import AuthenticationMiddleware
@@ -181,6 +183,73 @@ class ProfileCompletionTests(TestCase):
         self.assertFormError(
             response.context["form"], "phone", "This phone number is already registered"
         )
+
+
+class GoogleCallbackTests(TestCase):
+    """Drive the real /accounts/google/login/callback/ URL.
+
+    Only Google's HTTP responses are faked. This is the regression test for the
+    HTTP 500 users hit after approving the Google consent screen:
+    ``ModuleNotFoundError: No module named 'jwt'``. Google echoes an ``id_token``
+    back because the scope includes ``openid``, and allauth decodes it with
+    PyJWT, so a missing PyJWT took the whole callback down.
+    """
+
+    def _google_auth(self):
+        """Walk the real redirect to Google, then hit the callback URL."""
+        with mock.patch(
+            "allauth.socialaccount.providers.oauth2.client.OAuth2Client.get_access_token",
+            return_value={
+                "access_token": "ya29.test-access-token",
+                "token_type": "Bearer",
+                "expires_in": 3599,
+                # Present in a real Google response; drives the id_token path.
+                "id_token": "header.payload.signature",
+            },
+        ), mock.patch(
+            # Decoding the signature would need Google's real certs.
+            "allauth.socialaccount.providers.google.views._verify_and_decode",
+            return_value=dict(GOOGLE_PROFILE),
+        ), mock.patch(
+            "allauth.socialaccount.providers.google.views."
+            "GoogleOAuth2Adapter._fetch_user_info",
+            return_value=dict(GOOGLE_PROFILE),
+        ):
+            start = self.client.get(reverse("google_login"))
+            self.assertEqual(start.status_code, 302, "should redirect to Google")
+
+            state = dict(
+                pair.split("=", 1) for pair in start["Location"].split("?", 1)[1].split("&")
+            )["state"]
+            # allauth does not give the callback a reversible url name, so
+            # derive it: /accounts/google/login/ -> .../login/callback/
+            callback = f"{reverse('google_login')}callback/"
+            return self.client.get(
+                callback,
+                {"code": "4/0AXfake", "state": state, "scope": "email profile openid"},
+            )
+
+    def test_callback_signs_the_user_in_and_persists_the_record(self):
+        response = self._google_auth()
+
+        self.assertEqual(response.status_code, 302, getattr(response, "content", b"")[:400])
+        self.assertEqual(response["Location"], reverse("accounts:profile"))
+
+        user = User.objects.get(email=GOOGLE_PROFILE["email"])
+        self.assertIsNone(user.phone)
+        self.assertEqual(user.role, User.ROLE_BUYER)
+        self.assertTrue(SocialAccount.objects.filter(user=user, provider="google").exists())
+
+    def test_id_token_decoding_dependency_is_importable(self):
+        """Guards the requirements.txt entry that caused the 500."""
+        import jwt  # noqa: F401
+
+    def test_requirements_lists_every_allauth_dependency(self):
+        """A missing line here means a broken deploy, not just local pain."""
+        reqs = (Path(__file__).resolve().parents[2] / "requirements.txt").read_text().lower()
+        for package in ("django-allauth", "requests", "pyjwt"):
+            with self.subTest(package=package):
+                self.assertIn(package, reqs)
 
 
 class SignUpTests(TestCase):

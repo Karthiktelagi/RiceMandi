@@ -11,3 +11,13 @@ python-decouple==3.8
 sqlparse==0.6.0
 asgiref==3.12.1
 tzdata==2026.4
+
+# Authentication.
+# django-allauth is not optional: /accounts/google/login/ is part of the product.
+django-allauth==65.19.7
+# allauth talks to Google's OAuth2 endpoints.
+requests==2.34.2
+# Google's callback returns an id_token (the scope includes "openid") and allauth
+# decodes it with PyJWT. Without this the callback dies with
+# "ModuleNotFoundError: No module named 'jwt'" and returns HTTP 500.
+PyJWT==2.15.1
