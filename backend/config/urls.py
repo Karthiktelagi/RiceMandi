@@ -8,11 +8,12 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # Translation catalogue for HTMX/Bootstrap widgets that need client-side strings.
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    path("chat/", include("apps.chat.urls")),
+    path("notifications/", include("apps.notifications.urls")),
+    path("accounts/", include("allauth.urls")),
     path("", include("apps.core.urls")),
     path("", include("apps.accounts.urls")),
     path("", include("apps.market.urls")),
-    path("", include("apps.chat.urls")),
-    path("", include("apps.notifications.urls")),
     path("api/v1/", include("apps.market.api_urls")),
 ]
 

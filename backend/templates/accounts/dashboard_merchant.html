@@ -1,11 +1,99 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans "Merchant Dashboard" %}{% endblock %}
+{% block title %}{% trans "Merchant Dashboard" %} — RiceMandi{% endblock %}
 
 {% block content %}
 <div class="container py-4">
-  <h1 class="h3 mb-3">{% trans "Merchant Dashboard" %}</h1>
-  <p class="text-muted">{% trans "Post and manage your lots, view enquiries, and chat with buyers." %}</p>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1">{% trans "Merchant Dashboard" %}</h1>
+      <p class="text-muted mb-0">{% trans "Welcome back" %}, {{ user.business_name|default:user.username }}</p>
+    </div>
+    <a href="{% url 'market:lot_create' %}" class="btn btn-success">
+      <i class="bi bi-plus-lg"></i> {% trans "Post New Lot" %}
+    </a>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="card shadow-sm border-0 text-center p-3">
+        <div class="display-5 fw-bold text-success">{{ user.lots.count }}</div>
+        <small class="text-muted">{% trans "Total Lots" %}</small>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card shadow-sm border-0 text-center p-3">
+        <div class="display-5 fw-bold text-primary">{{ user.lots.filter.status|length|default:"0" }}</div>
+        <small class="text-muted">{% trans "Active Lots" %}</small>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card shadow-sm border-0 text-center p-3">
+        <div class="display-5 fw-bold text-warning">{{ user.negotiations_received.count }}</div>
+        <small class="text-muted">{% trans "Negotiations" %}</small>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card shadow-sm border-0 text-center p-3">
+        <div class="display-5 fw-bold text-info">{{ user.ratings_received.count }}</div>
+        <small class="text-muted">{% trans "Ratings" %}</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-white">
+          <h5 class="mb-0"><i class="bi bi-clock-history"></i> {% trans "Recent Bookings" %}</h5>
+        </div>
+        <div class="card-body">
+          {% with recent_bookings=user.lots.first.bookings.all|slice:":5" %}
+          {% for booking in recent_bookings %}
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <strong>{{ booking.buyer.username }}</strong>
+                <small class="text-muted d-block">{{ booking.lot.variety.name }} — {{ booking.quantity_quintal }} q</small>
+              </div>
+              <span class="badge bg-{% if booking.status == 'pending' %}warning text-dark{% elif booking.status == 'confirmed' %}success{% elif booking.status == 'completed' %}info{% else %}secondary{% endif %}">
+                {{ booking.get_status_display }}
+              </span>
+            </div>
+          {% empty %}
+            <p class="text-muted text-center mb-0">{% trans "No bookings yet." %}</p>
+          {% endwith %}
+        </div>
+        <div class="card-footer bg-white text-center">
+          <a href="{% url 'market:merchant_bookings' %}" class="btn btn-outline-success btn-sm">{% trans "Manage Bookings" %}</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-white">
+          <h5 class="mb-0"><i class="bi bi-hand-thumbs-up"></i> {% trans "Recent Negotiations" %}</h5>
+        </div>
+        <div class="card-body">
+          {% for neg in user.negotiations_received.all|slice:":5" %}
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <strong>{{ neg.buyer.username }}</strong>
+                <small class="text-muted d-block">{{ neg.lot.variety.name }} — ₹{{ neg.buyer_price }}/q</small>
+              </div>
+              <span class="badge bg-{% if neg.status == 'pending' %}warning text-dark{% elif neg.status == 'accepted' %}success{% elif neg.status == 'rejected' %}danger{% else %}info{% endif %}">
+                {{ neg.get_status_display }}
+              </span>
+            </div>
+          {% empty %}
+            <p class="text-muted text-center mb-0">{% trans "No negotiations yet." %}</p>
+          {% endfor %}
+        </div>
+        <div class="card-footer bg-white text-center">
+          <a href="{% url 'market:negotiation_list' %}" class="btn btn-outline-success btn-sm">{% trans "View All Negotiations" %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

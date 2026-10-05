@@ -54,6 +54,10 @@ INSTALLED_APPS = [
     # Third party
     "rest_framework",
     "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -68,6 +72,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Must sit after AuthenticationMiddleware: it reads request.user.
     "apps.accounts.middleware.LanguagePreferenceMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -86,6 +91,8 @@ TEMPLATES = [
                 "django.template.context_processors.i18n",
                 # Unread notification count for the navbar bell.
                 "apps.core.context_processors.unread_notifications",
+                # Feature flags (e.g. google_login_enabled) for templates.
+                "apps.core.context_processors.site_settings",
             ],
         },
     },
@@ -121,6 +128,28 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "accounts:dashboard"
 LOGOUT_REDIRECT_URL = "core:home"
+
+# django-allauth
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+SITE_ID = 1
+ACCOUNT_LOGIN_METHODS = {"username"}
+ACCOUNT_SIGNUP_FIELDS = ["username*", "password1*", "password2*"]
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+# Google OAuth
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": config("GOOGLE_CLIENT_ID", default=""),
+            "secret": config("GOOGLE_CLIENT_SECRET", default=""),
+        },
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+    }
+}
 
 
 # ------------------------------------------------------------ internationalization

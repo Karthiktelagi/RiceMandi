@@ -1,25 +1,59 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans "Varieties" %}{% endblock %}
+{% block title %}{% trans "Rice Varieties" %} — RiceMandi{% endblock %}
 
 {% block content %}
 <div class="container py-4">
-  <h1 class="h3 mb-3">{% trans "Varieties" %}</h1>
-  <div class="row g-3">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1">{% trans "Rice Varieties" %}</h1>
+      <p class="text-muted mb-0">{% trans "Browse all available varieties with live rates" %}</p>
+    </div>
+    <span class="badge bg-success fs-6">{{ varieties|length }} {% trans "varieties" %}</span>
+  </div>
+
+  <div class="row g-4">
     {% for variety in varieties %}
-      <div class="col-md-4 col-sm-6">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title"><a href="{% url 'market:variety_detail' variety.pk %}">{{ variety.name }}</a></h5>
-            <p class="card-text text-muted small">{{ variety.get_category_display }} • {{ variety.get_grade_display }}</p>
+    <div class="col-6 col-md-4 col-lg-3">
+      <a href="{% url 'market:variety_detail' variety.pk %}" class="text-decoration-none">
+        <div class="card h-100 border-0 shadow-sm overflow-hidden">
+          <div class="position-relative">
+            {% if variety.category == "paddy" %}
+              <img src="{% static 'img/rice-paddy.svg' %}" alt="{{ variety.name }}" class="card-img-top" style="height:120px;object-fit:cover;">
+            {% elif variety.grade == "grade_1" %}
+              <img src="{% static 'img/rice-basmati.svg' %}" alt="{{ variety.name }}" class="card-img-top" style="height:120px;object-fit:cover;">
+            {% else %}
+              <img src="{% static 'img/rice-sona-masuri.svg' %}" alt="{{ variety.name }}" class="card-img-top" style="height:120px;object-fit:cover;">
+            {% endif %}
+            <span class="badge bg-success position-absolute top-0 end-0 m-2">{% if variety.lot_count %}{{ variety.lot_count }} {% trans "lots" %}{% else %}{% trans "No lots" %}{% endif %}</span>
+          </div>
+          <div class="card-body p-3">
+            <h5 class="fw-bold text-dark mb-1">{{ variety.name }}</h5>
+            <p class="text-muted small mb-2">{{ variety.get_category_display }} • {{ variety.get_grade_display }}</p>
+            {% if variety.avg_price %}
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <small class="text-muted d-block">{% trans "Avg Rate" %}</small>
+                  <strong class="text-success fs-5">₹{{ variety.avg_price|floatformat:0 }}</small>
+                </div>
+                <div class="text-end">
+                  <small class="text-muted d-block">{% trans "Range" %}</small>
+                  <small class="fw-medium">₹{{ variety.min_price|floatformat:0 }} - ₹{{ variety.max_price|floatformat:0 }}</small>
+                </div>
+              </div>
+            {% else %}
+              <p class="text-muted small mb-0">{% trans "No rates available" %}</p>
+            {% endif %}
           </div>
         </div>
-      </div>
+      </a>
+    </div>
     {% empty %}
-      <div class="col-12">
-        <p class="text-muted">{% trans "No varieties available." %}</p>
-      </div>
+    <div class="col-12 text-center py-5">
+      <i class="bi bi-inbox fs-1 text-muted"></i>
+      <p class="text-muted mt-3">{% trans "No varieties available yet." %}</p>
+    </div>
     {% endfor %}
   </div>
 </div>

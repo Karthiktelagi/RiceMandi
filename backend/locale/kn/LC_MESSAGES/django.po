@@ -8,12 +8,12 @@ msgstr ""
 "POT-Creation-Date: 2026-10-03 21:40+0000\n"
 "PO-Revision-Date: 2026-10-03 21:40+0000\n"
 "Last-Translator: \n"
-"Language-Team: Kannada\n"
+"Language-Team: RiceMandi\n"
 "Language: kn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "RiceMandi"
 msgstr "ರೈಸ್ ಮಂಡಿ"
@@ -273,8 +273,11 @@ msgstr "ಹಿಂದೆ"
 msgid "Messages"
 msgstr "ಸಂದೇಶಗಳು"
 
-msgid "No conversations yet. Browse lots and click 'Contact Merchant' to start one."
-msgstr "ಇನ್ನೂ ಸಂಭಾಷಣೆಗಳಿಲ್ಲ. ಸರಿಗೆಗಳನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ ಮತ್ತು 'ವ್ಯಾಪಾರಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ' ಕ್ಲಿಕ್ ಮಾಡಿ."
+msgid ""
+"No conversations yet. Browse lots and click 'Contact Merchant' to start one."
+msgstr ""
+"ಇನ್ನೂ ಸಂಭಾಷಣೆಗಳಿಲ್ಲ. ಸರಿಗೆಗಳನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ ಮತ್ತು 'ವ್ಯಾಪಾರಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ'"
+" ಕ್ಲಿಕ್ ಮಾಡಿ."
 
 msgid "View Lot"
 msgstr "ಸರಿಗೆ ನೋಡಿ"
@@ -306,8 +309,12 @@ msgstr "ಸಿಸ್ಟಮ್"
 msgid "Price Alert: %(variety)s"
 msgstr "ಬೆಲೆ ಎಚ್ಚರಿಕೆ: %(variety)s"
 
-msgid "The price for %(variety)s has dropped to ₹%(price)/quintal or below your target of ₹%(target)/quintal."
-msgstr "%(variety)s ಬೆಲೆ ₹%(price)/ಕ್ವಿಂಟಲ್‌ಗೆ ಅಥವಾ ನಿಮ್ಮ ಟಾರ್ಗೆಟ್ ₹%(target)/ಕ್ವಿಂಟಲ್‌ಗಿಂತ ಕಡಿಮೆಗೆ ಬಂದಿದೆ."
+msgid ""
+"The price for %(variety)s has dropped to ₹%(price)/quintal or below your "
+"target of ₹%(target)/quintal."
+msgstr ""
+"%(variety)s ಬೆಲೆ ₹%(price)/ಕ್ವಿಂಟಲ್‌ಗೆ ಅಥವಾ ನಿಮ್ಮ ಟಾರ್ಗೆಟ್ "
+"₹%(target)/ಕ್ವಿಂಟಲ್‌ಗಿಂತ ಕಡಿಮೆಗೆ ಬಂದಿದೆ."
 
 msgid "You are #%(pos)d in queue for %(lot)s."
 msgstr "ನೀವು %(lot)s ಗೆ #%(pos)d ನೇ ಸ್ಥಾನದಲ್ಲಿದ್ದೀರಿ."
@@ -546,8 +553,599 @@ msgstr "ಸಂದೇಶಗಳು"
 msgid "No active price alerts to check."
 msgstr "ಪರಿಶೀಲಿಸಲು ಯಾವುದೇ ಸಕ್ರಿಯ ಬೆಲೆ ಎಚ್ಚರಿಕೆಗಳಿಲ್ಲ."
 
-msgid "Checked %(alerts)d alerts: %(triggered)d triggered, %(notified)d notifications created."
-msgstr "%(alerts)d ಎಚ್ಚರಿಕೆಗಳನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ: %(triggered)d ಟ್ರಿಗರ್, %(notified)d ಅಧಿಸೂಚನೆಗಳು ರಚಿಸಲಾಗಿದೆ."
+msgid ""
+"Checked %(alerts)d alerts: %(triggered)d triggered, %(notified)d "
+"notifications created."
+msgstr ""
+"%(alerts)d ಎಚ್ಚರಿಕೆಗಳನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ: %(triggered)d ಟ್ರಿಗರ್, "
+"%(notified)d ಅಧಿಸೂಚನೆಗಳು ರಚಿಸಲಾಗಿದೆ."
 
 msgid "Live rice and paddy rates at the APMC yard."
 msgstr "APMC ಯಾರ್ಡ್‌ನಲ್ಲಿ ಲೈವ್ ಅಕ್ಕಿ ಮತ್ತು ಭತ್ತದ ದರಗಳು."
+
+msgid "%(buyer)s enquired about %(lot)s"
+msgstr "%(buyer)s ನಿಂದ %(lot)s ಕುರಿತು ಪ್ರಶ್ನೆ"
+
+msgid "API Docs"
+msgstr "API ದಾಖಲೆಗಳು"
+
+msgid "Accepted"
+msgstr "ಸ್ವೀಕೃತ"
+
+msgid "Account"
+msgstr "ಖಾತೆ"
+
+msgid "Account pending verification"
+msgstr "ಖಾತೆ ಪರಿಶೀಲನೆಗೆ ಬಾಗಿದೆ"
+
+msgid "Activate"
+msgstr "ಸಕ್ರಿಯಗೊಳಿಸು"
+
+msgid "Active Lots"
+msgstr "ಸಕ್ರಿಯ ಲಾಟ್‌ಗಳು"
+
+msgid "Add variety"
+msgstr "ಬಗೆ ಸೇರಿಸು"
+
+msgid "Added by"
+msgstr "ಸೇರಿಸಿದವರು"
+
+msgid "Admin Dashboard"
+msgstr "ಆಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್"
+
+msgid "Already have an account?"
+msgstr "ಈಗಾಗಲೇ ಖಾತೆಯಿದೆಯೇ?"
+
+msgid "Approve"
+msgstr "ಅನುಮೋದಿಸು"
+
+msgid "Arrival Date"
+msgstr "ಬಂದ ದಿನಾಂಕ"
+
+msgid "Auto-calculated packet rates (1 packet = 26 kg). No manual math."
+msgstr ""
+"ಸ್ವಯಂ-ಲೆಕ್ಕಾಚಾರ ಪ್ಯಾಕೆಟ್ ದರಗಳು (1 ಪ್ಯಾಕೆಟ್ = 26 ಕೆಜಿ). ಕೈಯಿಂದ ಲೆಕ್ಕಾಚಾರ "
+"ಅಗತ್ಯವಿಲ್ಲ."
+
+msgid "Available Quantity (quintal)"
+msgstr "ಲಭ್ಯ ಪ್ರಮಾಣ (ಕ್ವಿಂಟಲ್)"
+
+msgid "Available for booking"
+msgstr "ಬುಕಿಂಗ್‌ಗೆ ಲಭ್ಯ"
+
+msgid "Avg Rate"
+msgstr "ಸರಾಸರಿ ದರ"
+
+msgid "Book lots & negotiate"
+msgstr "ಲಾಟ್‌ಗಳನ್ನು ಬುಕ್ ಮಾಡಿ ಮತ್ತು ಮಾತುಕತೆ ನಡೆಸಿ"
+
+msgid "Broken (%)"
+msgstr "ತುಂಬುಕು (%)"
+
+msgid "Browse Lots"
+msgstr "ಲಾಟ್‌ಗಳನ್ನು ನೋಡಿ"
+
+msgid "Browse Varieties"
+msgstr "ಬಗೆಗಳನ್ನು ನೋಡಿ"
+
+msgid "Browse all available varieties with live rates"
+msgstr "ಲೈವ್ ದರಗಳೊಂದಿಗೆ ಎಲ್ಲಾ ಲಭ್ಯ ಬಗೆಗಳನ್ನು ನೋಡಿ"
+
+msgid "Business Name"
+msgstr "ವ್ಯಾಪಾರ ಹೆಸರು"
+
+msgid "Business name"
+msgstr "ವ್ಯಾಪಾರ ಹೆಸರು"
+
+msgid "Buyer Dashboard"
+msgstr "ಖರೀದಾರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್"
+
+msgid "Category"
+msgstr "ವರ್ಗ"
+
+msgid "Check price alerts and notify users when target prices are reached."
+msgstr ""
+"ಬೆಲೆ ಎಚ್ಚರಿಕೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ, ಗುರಿಯಾದ ಬೆಲೆಗೆ ಬಂದಾಗ ಬಳಕೆದಾರರನ್ನು ಸೂಚಿಸಿ."
+
+msgid "Choose a username"
+msgstr "ಬಳಕೆದಾರ ಹೆಸರು ಆರಿಸಿ"
+
+msgid "Confirm Password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ದೃಢೀಕರಿಸಿ"
+
+msgid "Confirm your password"
+msgstr "ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ದೃಢೀಕರಿಸಿ"
+
+msgid "Confirm, cancel, or complete bookings for your lots"
+msgstr "ನಿಮ್ಮ ಲಾಟ್‌ಗಳ ಬುಕಿಂಗ್‌ಗಳನ್ನು ದೃಢೀಕರಿಸಿ, ರದ್ದುಗೊಳಿಸಿ ಅಥವಾ ಪೂರ್ಣಗೊಳಿಸಿ"
+
+msgid "Contact Us"
+msgstr "ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ"
+
+msgid "Continue with Google"
+msgstr "Google ನೊಂದಿಗೆ ಮುಂದುವರಿಯಿರಿ"
+
+msgid "Counter Offer"
+msgstr "ವಿರೋಧ ಆಫರ್"
+
+msgid "Countered"
+msgstr "ವಿರೋಧ ಮಾಡಲಾಗಿದೆ"
+
+msgid "Create Account"
+msgstr "ಖಾತೆ ಸೃಷ್ಟಿಸಿ"
+
+msgid "Create Free Account"
+msgstr "ಉಚಿತ ಖಾತೆ ಸೃಷ್ಟಿಸಿ"
+
+msgid "Create a password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ರಚಿಸಿ"
+
+msgid "Create your account"
+msgstr "ನಿಮ್ಮ ಖಾತೆ ಸೃಷ್ಟಿಸಿ"
+
+msgid "Date"
+msgstr "ದಿನಾಂಕ"
+
+msgid "Deactivate"
+msgstr "ನಿಷ್ಕ್ರಿಯಗೊಳಿಸು"
+
+msgid "Demand (quintal)"
+msgstr "ಬೇಡಿಕೆ (ಕ್ವಿಂಟಲ್)"
+
+msgid "Description"
+msgstr "ವಿವರಣೆ"
+
+msgid "Don't have an account?"
+msgstr "ಖಾತೆಯಿಲ್ಲವೇ?"
+
+msgid "Edit"
+msgstr "ಸಂಪಾದಿಸು"
+
+msgid "Edit variety"
+msgstr "ಬಗೆ ಸಂಪಾದಿಸು"
+
+msgid "Enquire"
+msgstr "ಪ್ರಶ್ನೆ ಮಾಡಿ"
+
+msgid "Enter password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ"
+
+msgid "Enter username"
+msgstr "ಬಳಕೆದಾರ ಹೆಸರು ನಮೂದಿಸಿ"
+
+msgid "Enter your phone number"
+msgstr "ನಿಮ್ಮ ಫೋನ್ ನಂಬರ್ ನಮೂದಿಸಿ"
+
+msgid "Featured"
+msgstr "ವಿಶೇಷ"
+
+msgid "Featured Lots"
+msgstr "ವಿಶೇಷ ಲಾಟ್‌ಗಳು"
+
+msgid "Fill in the details of your rice lot"
+msgstr "ನಿಮ್ಮ ಅಕ್ಕಿ ಲಾಟ್‌ನ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ"
+
+msgid "First-Come-First-Serve"
+msgstr "ಮೊದಲ ಬಂದವನು ಮೊದಲು ಸೇವೆ"
+
+msgid "Forgot password?"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ಮರೆಯಾಗಿದೆಯೇ?"
+
+msgid "GST"
+msgstr "GST"
+
+msgid "GST Number"
+msgstr "GST ನಂಬರ್"
+
+msgid "GST number"
+msgstr "GST ನಂಬರ್"
+
+msgid "GST number (optional)"
+msgstr "GST ನಂಬರ್ (ಐಚ್ಛಿಕ)"
+
+msgid "Grade"
+msgstr "ಗ್ರೇಡ್"
+
+msgid "Grain Length (mm)"
+msgstr "ಧಾನ್ಯ ಉದ್ದ (ಮಿ.ಮೀ)"
+
+msgid "Hand-picked premium lots from verified merchants"
+msgstr "ಸತ್ಯಾಪಿತ ವ್ಯಾಪಾರಿಗಳಿಂದ ಆಯ್ಕೆಯಾದ ಪ್ರೀಮಿಯಂ ಲಾಟ್‌ಗಳು"
+
+msgid "Help Center"
+msgstr "ಸಹಾಯ ಕೇಂದ್ರ"
+
+msgid "Home"
+msgstr "ಮುಖಪುಟ"
+
+msgid "I agree to the"
+msgstr "ನಾನು ಒಪ್ಪುತ್ತೇನೆ"
+
+msgid "I am a"
+msgstr "ನಾನು"
+
+msgid "In-App Negotiation"
+msgstr "ಆಪ್‌ನಲ್ಲಿ ಮಾತುಕತೆ"
+
+msgid "Inactive"
+msgstr "ನಿಷ್ಕ್ರಿಯ"
+
+msgid ""
+"India's first dedicated B2B rice marketplace with live APMC rates, first-"
+"come-first-serve queue booking, and in-app price negotiation."
+msgstr ""
+"ಲೈವ್ APMC ದರಗಳು, ಮೊದಲ ಬಂದವನು ಮೊದಲು ಸರಣಿ ಬುಕಿಂಗ್ ಮತ್ತು ಆಪ್‌ನಲ್ಲಿ ಬೆಲೆ "
+"ಮಾತುಕತೆಯೊಂದಿಗೆ ಭಾರತದ ಮೊದಲ ವಿಶೇಷ B2B ಅಕ್ಕಿ ಮಾರುಕಟ್ಟೆ."
+
+msgid "India's most trusted B2B rice trading platform"
+msgstr "ಭಾರತದ ಅತ್ಯಂತ ವಿಶ್ವಾಸಾರ್ಹ B2B ಅಕ್ಕಿ ವ್ಯಾಪಾರ ಪ್ಲ್ಯಾಟ್‌ಫಾರ್ಮ್"
+
+msgid "Join Free"
+msgstr "ಉಚಿತವಾಗಿ ಸೇರಿ"
+
+msgid "Join RiceMandi — India's trusted B2B rice marketplace"
+msgstr "RiceMandi ಗೆ ಸೇರಿ — ಭಾರತದ ವಿಶ್ವಾಸಾರ್ಹ B2B ಅಕ್ಕಿ ಮಾರುಕಟ್ಟೆ"
+
+msgid ""
+"Join thousands of merchants and buyers on India's most trusted rice "
+"marketplace."
+msgstr ""
+"ಭಾರತದ ಅತ್ಯಂತ ವಿಶ್ವಾಸಾರ್ಹ ಅಕ್ಕಿ ಮಾರುಕಟ್ಟೆಯಲ್ಲಿ ಸಹಸ್ರಾರು ವ್ಯಾಪಾರಿಗಳು ಮತ್ತು "
+"ಖರೀದಾರರೊಂದಿಗೆ ಸೇರಿ."
+
+msgid "Joined"
+msgstr "ಸೇರಿಕೊಂಡಿದ್ದಾರೆ"
+
+msgid "LIVE"
+msgstr "ಲೈವ್"
+
+msgid "Language"
+msgstr "ಭಾಷೆ"
+
+msgid "Legal"
+msgstr "ಕಾನೂನು"
+
+msgid "Live APMC Rates"
+msgstr "ಲೈವ್ APMC ದರಗಳು"
+
+msgid "Live Lots"
+msgstr "ಲೈವ್ ಲಾಟ್‌ಗಳು"
+
+msgid "Live Market Data"
+msgstr "ಲೈವ್ ಮಾರುಕಟ್ಟೆ ಡೇಟಾ"
+
+msgid "Live Updates"
+msgstr "ಲೈವ್ ಅಪ್‌ಡೇಟ್‌ಗಳು"
+
+msgid "Live prices from APMC yards across Karnataka"
+msgstr "ಕರ್ನಾಟಕದಾದ್ಯಂತ APMC ಯಾರ್ಡ್‌ಗಳಿಂದ ಲೈವ್ ಬೆಲೆಗಳು"
+
+msgid "Live rice and paddy rates at the APMMC yard."
+msgstr "APMC ಯಾರ್ಡ್‌ನಲ್ಲಿ ಲೈವ್ ಅಕ್ಕಿ ಮತ್ತು ಅಣೆಗೆರೆ ದರಗಳು."
+
+msgid "Log in to your RiceMandi account"
+msgstr "ನಿಮ್ಮ RiceMandi ಖಾತೆಗೆ ಲಾಗ್‌ಇನ್ ಆಗಿ"
+
+msgid "Logged out"
+msgstr "ಲಾಗ್‌ಅವ್ಟ್ ಆಗಿದೀಯಿ"
+
+msgid "Made with ❤️ in Karnataka, India"
+msgstr "ಭಾರತದ ಕರ್ನಾಟಕದಲ್ಲಿ ❤️ ಜೊತೆಗೆ ತಯಾರಿಸಲಾಗಿದೆ"
+
+msgid "Manage merchants, varieties, and platform settings"
+msgstr "ವ್ಯಾಪಾರಿಗಳು, ಬಗೆಗಳು ಮತ್ತು ಪ್ಲ್ಯಾಟ್‌ಫಾರ್ಮ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಿ"
+
+msgid "Manage your posted lots"
+msgstr "ನಿಮ್ಮ ಹಾಕಿದ ಲಾಟ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಿ"
+
+msgid "Max"
+msgstr "ಗರಿಷ್ಠ"
+
+msgid "Merchant Dashboard"
+msgstr "ವ್ಯಾಪಾರಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್"
+
+msgid "Merchants require admin approval"
+msgstr "ವ್ಯಾಪಾರಿಗಳಿಗೆ ಆಡ್ಮಿನ್ ಅನುಮೋದನೆ ಅಗತ್ಯ"
+
+msgid "Milestone 3 fills this in per role."
+msgstr "ಮೈಲ್ಸ್ಟೋನ್ 3 ಇದನ್ನು ಪ್ರತಿ ಪಾತ್ರದಲ್ಲಿ ತುಂಬುತ್ತದೆ."
+
+msgid "Milling (%)"
+msgstr "ಅರಿಸುವಿಕೆ (%)"
+
+msgid "Min"
+msgstr "ಕನಿಷ್ಠ"
+
+msgid "Moisture (%)"
+msgstr "ತೇವಾಂಶ (%)"
+
+msgid "Name"
+msgstr "ಹೆಸರು"
+
+msgid "Negotiate prices directly with merchants. Counter-offers in real-time."
+msgstr ""
+"ವ್ಯಾಪಾರಿಗಳೊಂದಿಗೆ ನೇರವಾಗಿ ಬೆಲೆ ಮಾತುಕತೆ ನಡೆಸಿ. ವಾಸ್ತವ-ಸಮಯದಲ್ಲಿ ವಿರೋಧ ಆಫರ್‌ಗಳು."
+
+msgid "New Enquiry"
+msgstr "ಹೊಸ ಪ್ರಶ್ನೆ"
+
+msgid "No live rates available yet. Check back soon!"
+msgstr "ಇನ್ನೂ ಲೈವ್ ದರಗಳು ಲಭ್ಯವಿಲ್ಲ. ಶೀಘ್ರದಲ್ಲಿ ಮರುಪರಿಶೀಲಿಸಿ!"
+
+msgid "No lots"
+msgstr "ಲಾಟ್‌ಗಳು ಇಲ್ಲ"
+
+msgid "No lots posted yet."
+msgstr "ಇನ್ನೂ ಲಾಟ್‌ಗಳು ಹಾಕಲಾಗಿಲ್ಲ."
+
+msgid "No mills available."
+msgstr "ಅರಿಸುಗಳು ಲಭ್ಯವಿಲ್ಲ."
+
+msgid "No negotiations yet."
+msgstr "ಇನ್ನೂ ಮಾತುಕತೆಗಳು ಇಲ್ಲ."
+
+msgid "No pending merchant approvals."
+msgstr "ಬಾಗಿರುವ ವ್ಯಾಪಾರಿ ಅನುಮೋದನೆಗಳು ಇಲ್ಲ."
+
+msgid "No rates available"
+msgstr "ದರಗಳು ಲಭ್ಯವಿಲ್ಲ"
+
+msgid "No varieties available yet."
+msgstr "ಇನ್ನೂ ಬಗೆಗಳು ಲಭ್ಯವಿಲ್ಲ."
+
+msgid "No varieties found."
+msgstr "ಬಗೆಗಳು ಕಂಡುಬಂವಿಲ್ಲ."
+
+msgid "No varieties in watchlist."
+msgstr "ವಾಚ್‌ಲಿಸ್ಟ್‌ನಲ್ಲಿ ಬಗೆಗಳು ಇಲ್ಲ."
+
+msgid "No watched varieties."
+msgstr "ವಾಚ್ ಮಾಡಿದ ಬಗೆಗಳು ಇಲ್ಲ."
+
+msgid "Packet Pricing"
+msgstr "ಪ್ಯಾಕೆಟ್ ಬೆಲೆ"
+
+msgid "Packets"
+msgstr "ಪ್ಯಾಕೆಟ್‌ಗಳು"
+
+msgid "Password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್"
+
+msgid "Pending Merchant Approvals"
+msgstr "ಬಾಗಿರುವ ವ್ಯಾಪಾರಿ ಅನುಮೋದನೆಗಳು"
+
+msgid "Pending Merchants"
+msgstr "ಬಾಗಿರುವ ವ್ಯಾಪಾರಿಗಳು"
+
+msgid "Pending Verification"
+msgstr "ಪರಿಶೀಲನೆಗೆ ಬಾಗಿದೆ"
+
+msgid "Phone"
+msgstr "ಫೋನ್"
+
+msgid "Phone number"
+msgstr "ಫೋನ್ ನಂಬರ್"
+
+msgid "Phone number is required"
+msgstr "ಫೋನ್ ನಂಬರ್ ಅಗತ್ಯ"
+
+msgid "Photo"
+msgstr "ಫೋಟೋ"
+
+msgid "Platform"
+msgstr "ಪ್ಲ್ಯಾಟ್‌ಫಾರ್ಮ್"
+
+msgid "Please contact the admin for assistance."
+msgstr "ಸಹಾಯಕ್ಕಾಗಿ ಆಡ್ಮಿನ್‌ಅನ್ನು ಸಂಪರ್ಕಿಸಿ."
+
+msgid "Please enter a message."
+msgstr "ದಯವಿಟ್ಟು ಸಂದೇಶ ನಮೂದಿಸಿ."
+
+msgid "Post New Lot"
+msgstr "ಹೊಸ ಲಾಟ್ ಹಾಕಿ"
+
+msgid "Post Your First Lot"
+msgstr "ನಿಮ್ಮ ಮೊದಲ ಲಾಟ್ ಹಾಕಿ"
+
+msgid "Post lots & sell"
+msgstr "ಲಾಟ್‌ಗಳು ಹಾಕಿ ಮಾರಿ"
+
+msgid "Posted"
+msgstr "ಹಾಕಲಾಗಿದೆ"
+
+msgid "Price per Packet (₹)"
+msgstr "ಪ್ಯಾಕೆಟ್‌ಗೆ ಬೆಲೆ (₹)"
+
+msgid "Price per Quintal (₹)"
+msgstr "ಕ್ವಿಂಟಲ್‌ಗೆ ಬೆಲೆ (₹)"
+
+msgid "Price/q"
+msgstr "ಬೆಲೆ/ಕ್ವಿಂಟಲ್"
+
+msgid "Privacy Policy"
+msgstr "ಗೋಪ್ಯತಾ ನೀತಿ"
+
+msgid "Quantity wanted (quintal)"
+msgstr "ಬೇಕಾದ ಪ್ರಮಾಣ (ಕ್ವಿಂಟಲ್)"
+
+msgid "Range"
+msgstr "ವ್ಯಾಪ್ತಿ"
+
+msgid "Rate Booking"
+msgstr "ದರ ಬುಕಿಂಗ್"
+
+msgid "Ratings"
+msgstr "ರೇಟಿಂಗ್‌ಗಳು"
+
+msgid "Real-time prices from yards across Karnataka. No delays, no middlemen."
+msgstr ""
+"ಕರ್ನಾಟಕದಾದ್ಯಂತ ಯಾರ್ಡ್‌ಗಳಿಂದ ವಾಸ್ತವ-ಸಮಯ ಬೆಲೆಗಳು. ವಿಳಂಬವಿಲ್ಲ, ಮಧ್ಯವರ್ತಿಗಳಿಲ್ಲ."
+
+msgid "Recent Bookings"
+msgstr "ಇತ್ತೀಚಿನ ಬುಕಿಂಗ್‌ಗಳು"
+
+msgid "Recent Negotiations"
+msgstr "ಇತ್ತೀಚಿನ ಮಾತುಕತೆಗಳು"
+
+msgid "Refund Policy"
+msgstr "ಹಣವನ್ನು ಹಿಂದಿರುಗಿಸುವ ನೀತಿ"
+
+msgid "Register as"
+msgstr "ಈ ರೀತಿ ನೋಂದಾಯಿಸಿ"
+
+msgid "Reject"
+msgstr "ತಿರಸ್ಕರಿಸು"
+
+msgid "Rejected"
+msgstr "ತಿರಸ್ಕೃತ"
+
+msgid "Remember me"
+msgstr "ನನ್ನು ಗೆಲೆಯಿರಿ"
+
+msgid "Respond"
+msgstr "ಪ್ರತಿಕ್ರಿಯಿಸಿ"
+
+msgid "Return to home"
+msgstr "ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ"
+
+msgid "Rice & Paddy Rates at Your Fingertips"
+msgstr "ನಿಮ್ಮ ಬೆರಳುಗಳಲ್ಲಿ ಅಕ್ಕಿ ಮತ್ತು ಅಣೆಗೆರೆ ದರಗಳು"
+
+msgid "Rice Varieties"
+msgstr "ಅಕ್ಕಿ ಬಗೆಗಳು"
+
+msgid "RiceMandi — Live APMC Rice Rates"
+msgstr "RiceMandi — ಲೈವ್ APMC ಅಕ್ಕಿ ದರಗಳು"
+
+msgid "Save"
+msgstr "ಉಳಿಸಿ"
+
+msgid "Save Changes"
+msgstr "ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ"
+
+msgid "Seed the database with real-world rice varieties."
+msgstr "ವಾಸ್ತವ ಜಗತ್ತಿನ ಅಕ್ಕಿ ಬಗೆಗಳೊಂದಿಗೆ ಡೇಟಾಬೇಸ್‌ಅನ್ನು ತುಂಬಿ."
+
+msgid "Send Enquiry"
+msgstr "ಪ್ರಶ್ನೆ ಕಳುಹಿಸಿ"
+
+msgid "Show password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ತೋರಿಸು"
+
+msgid "Start Trading Today"
+msgstr "ಇಂದು ವ್ಯಾಪಾರ ಪ್ರಾರಂಭಿಸಿ"
+
+msgid "Support"
+msgstr "ಬೆಂಬಲ"
+
+msgid "Target"
+msgstr "ಗುರಿ"
+
+msgid "Terms of Service"
+msgstr "ಸೇವಾ ನಿಬಂಧನೆಗಳು"
+
+msgid "The variety \"%(name)s\" already exists. Use the existing variety instead."
+msgstr "\"%(name)s\" ಬಗೆ ಈಗಾಗಲೇ ಇದೆ. ಬದಲಿಗೆ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಬಗೆಯನ್ನು ಬಳಸಿ."
+
+msgid "This phone number is already registered"
+msgstr "ಈ ಫೋನ್ ನಂಬರ್ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲ್ಪಟ್ಟಿದೆ"
+
+msgid "Today's Rates"
+msgstr "ಇಂದಿನ ದರಗಳು"
+
+msgid "Total Bookings"
+msgstr "ಒಟ್ಟು ಬುಕಿಂಗ್‌ಗಳು"
+
+msgid "Total Lots"
+msgstr "ಒಟ್ಟು ಲಾಟ್‌ಗಳು"
+
+msgid "Total Merchants"
+msgstr "ಒಟ್ಟು ವ್ಯಾಪಾರಿಗಳು"
+
+msgid "Total Users"
+msgstr "ಒಟ್ಟು ಬಳಕೆದಾರರು"
+
+msgid "Total Varieties"
+msgstr "ಒಟ್ಟು ಬಗೆಗಳು"
+
+msgid "Transparent queue booking system. Join the queue, get your turn."
+msgstr "ಪಾರದರ್ಶಕ ಸರಣಿ ಬುಕಿಂಗ್ ವ್ಯವಸ್ಥೆ. ಸರಣಿಗೆ ಸೇರಿ, ನಿಮ್ಮ ಬಾರಿ ಪಡೆಯಿರಿ."
+
+msgid "Unwatch"
+msgstr "ವಾಚ್ ತೆಗೆದುಹಾಕಿ"
+
+msgid "Username"
+msgstr "ಬಳಕೆದಾರ ಹೆಸರು"
+
+msgid "Verified Merchants"
+msgstr "ಸತ್ಯಾಪಿತ ವ್ಯಾಪಾರಿಗಳು"
+
+msgid "View"
+msgstr "ನೋಡಿ"
+
+msgid "View & Book"
+msgstr "ನೋಡಿ ಮತ್ತು ಬುಕ್ ಮಾಡಿ"
+
+msgid "View All Bookings"
+msgstr "ಎಲ್ಲಾ ಬುಕಿಂಗ್‌ಗಳನ್ನು ನೋಡಿ"
+
+msgid "View All Negotiations"
+msgstr "ಎಲ್ಲಾ ಮಾತುಕತೆಗಳನ್ನು ನೋಡಿ"
+
+msgid "View All Varieties"
+msgstr "ಎಲ್ಲಾ ಬಗೆಗಳನ್ನು ನೋಡಿ"
+
+msgid "View Live Rates"
+msgstr "ಲೈವ್ ದರಗಳನ್ನು ನೋಡಿ"
+
+msgid "View Watchlist"
+msgstr "ವಾಚ್‌ಲಿಸ್ಟ್ ನೋಡಿ"
+
+msgid "Watched Varieties"
+msgstr "ವಾಚ್ ಮಾಡಿದ ಬಗೆಗಳು"
+
+msgid "Welcome back"
+msgstr "ಮರುಸ್ವಾಗತ"
+
+msgid "Why RiceMandi?"
+msgstr "ರೈಸ್ ಮಂಡಿ ಏಕೆ?"
+
+msgid "You have been logged out"
+msgstr "ನೀವು ಲಾಗ್‌ಅವ್ಟ್ ಆಗಿದ್ದೀಯಿ"
+
+msgid "Your Offer"
+msgstr "ನಿಮ್ಮ ಆಫರ್"
+
+msgid "Your business name"
+msgstr "ನಿಮ್ಮ ವ್ಯಾಪಾರ ಹೆಸರು"
+
+msgid "Your enquiry has been sent to the merchant."
+msgstr "ನಿಮ್ಮ ಪ್ರಶ್ನೆ ವ್ಯಾಪಾರಿಗೆ ಕಳುಹಿಸಲ್ಪಟ್ಟಿದೆ."
+
+msgid ""
+"Your merchant account is awaiting admin approval. You'll be able to post "
+"lots once approved."
+msgstr ""
+"ನಿಮ್ಮ ವ್ಯಾಪಾರಿ ಖಾತೆ ಆಡ್ಮಿನ್ ಅನುಮೋದನೆಗೆ ಬಾಗಿದೆ. ಅನುಮೋದನೆ ಬಂದ ನಂತರ ಲಾಟ್‌ಗಳು "
+"ಹಾಕಬಹುದು."
+
+msgid "Your price negotiations with merchants and buyers"
+msgstr "ವ್ಯಾಪಾರಿಗಳು ಮತ್ತು ಖರೀದಾರರೊಂದಿಗೆ ನಿಮ್ಮ ಬೆಲೆ ಮಾತುಕತೆಗಳು"
+
+msgid "and"
+msgstr "ಮತ್ತು"
+
+msgid "lots"
+msgstr "ಲಾಟ್‌ಗಳು"
+
+msgid "lots available"
+msgstr "ಲಾಟ್‌ಗಳು ಲಭ್ಯ"
+
+msgid "or"
+msgstr "ಅಥವಾ"
+
+msgid "varieties"
+msgstr "ಬಗೆಗಳು"
+
+msgid "© 2026 RiceMandi. All rights reserved."
+msgstr "© 2026 RiceMandi. ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿವೆ."

@@ -1,44 +1,67 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans "Log in" %}{% endblock %}
+{% block title %}{% trans "Log in" %} — RiceMandi{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-lg-5 col-md-7">
+    <div class="col-md-5 col-lg-4">
+      <div class="text-center mb-4">
+        <img src="{% static 'img/logo.svg' %}" alt="RiceMandi" height="50" class="mb-3">
+        <h1 class="h4 fw-bold">{% trans "Welcome back" %}</h1>
+        <p class="text-muted small">{% trans "Log in to your RiceMandi account" %}</p>
+      </div>
+
       <div class="card shadow-sm border-0">
         <div class="card-body p-4">
-          <h1 class="h3 mb-3 text-center">{% trans "Log in" %}</h1>
           <form method="post">
             {% csrf_token %}
-            {% if form.non_field_errors %}
-              <div class="alert alert-danger">
-                {{ form.non_field_errors }}
+            <div class="mb-3">
+              <label for="id_username" class="form-label small fw-medium">{% trans "Username" %}</label>
+              <input type="text" name="username" id="id_username" class="form-control" placeholder="{% trans 'Enter username' %}" required autofocus>
+            </div>
+            <div class="mb-3">
+              <label for="id_password" class="form-label small fw-medium">{% trans "Password" %}</label>
+              <div class="input-group">
+                <input type="password" name="password" id="id_password" class="form-control" placeholder="{% trans 'Enter password' %}" required>
+                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('id_password', this)" aria-label="{% trans 'Show password' %}">
+                  <i class="bi bi-eye"></i>
+                </button>
               </div>
-            {% endif %}
-            <div class="mb-3">
-              <label for="{{ form.username.id_for_label }}" class="form-label">{% trans "Username" %}</label>
-              <input type="text" name="{{ form.username.name }}" class="form-control" id="{{ form.username.id_for_label }}" value="{{ form.username.value|default:'' }}" required>
-              {% if form.username.errors %}
-                <div class="text-danger small">{{ form.username.errors }}</div>
-              {% endif %}
             </div>
-            <div class="mb-3">
-              <label for="{{ form.password.id_for_label }}" class="form-label">{% trans "Password" %}</label>
-              <input type="password" name="{{ form.password.name }}" class="form-control" id="{{ form.password.id_for_label }}" required>
-              {% if form.password.errors %}
-                <div class="text-danger small">{{ form.password.errors }}</div>
-              {% endif %}
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="form-check">
+                <input type="checkbox" name="remember" id="remember" class="form-check-input">
+                <label for="remember" class="form-check-label small">{% trans "Remember me" %}</label>
+              </div>
+              <a href="#" class="small text-decoration-none">{% trans "Forgot password?" %}</a>
             </div>
-            <button type="submit" class="btn btn-success w-100">{% trans "Log in" %}</button>
+            <button type="submit" class="btn btn-success w-100 py-2">{% trans "Log in" %}</button>
           </form>
-          <div class="text-center mt-3">
-            <small>{% trans "Don't have an account?" %} <a href="{% url 'accounts:signup' %}">{% trans "Sign up" %}</a></small>
-          </div>
         </div>
       </div>
+
+      <p class="text-center text-muted small mt-3">
+        {% trans "Don't have an account?" %} <a href="{% url 'accounts:signup' %}" class="text-success fw-medium">{% trans "Sign up" %}</a>
+      </p>
     </div>
   </div>
 </div>
 {% endblock %}
+
+<script>
+function togglePassword(fieldId, btn) {
+  const field = document.getElementById(fieldId);
+  const icon = btn.querySelector('i');
+  if (field.type === 'password') {
+    field.type = 'text';
+    icon.classList.remove('bi-eye');
+    icon.classList.add('bi-eye-slash');
+  } else {
+    field.type = 'password';
+    icon.classList.remove('bi-eye-slash');
+    icon.classList.add('bi-eye');
+  }
+}
+</script>

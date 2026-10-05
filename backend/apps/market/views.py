@@ -21,7 +21,18 @@ def home_redirect(request):
 
 @require_GET
 def variety_list(request):
-    varieties = Variety.objects.filter(is_active=True).order_by("name")
+    from django.db.models import Avg, Count, Max, Min, Q
+
+    varieties = (
+        Variety.objects.filter(is_active=True)
+        .annotate(
+            min_price=Min("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
+            max_price=Max("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
+            avg_price=Avg("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
+            lot_count=Count("lots", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
+        )
+        .order_by("name")
+    )
     return render(request, "market/variety_list.html", {"varieties": varieties})
 
 
