@@ -133,6 +133,15 @@ class ProfileCompletionTests(TestCase):
         response = self.client.get(reverse("accounts:profile"))
         self.assertRedirects(response, reverse("accounts:dashboard"))
 
+    def test_staff_is_not_held_up_by_the_profile_gate(self):
+        staff = User.objects.create_superuser(
+            username="boss", password="Str0ng-Pass-99!", email="boss@example.com"
+        )
+        self.assertIsNone(staff.phone)
+        self.client.force_login(staff)
+        response = self.client.get(reverse("accounts:profile"))
+        self.assertRedirects(response, reverse("accounts:dashboard"))
+
     def test_saving_profile_stores_phone_and_flips_merchant_to_unapproved(self):
         self.client.force_login(self.user)
         response = self.client.post(reverse("accounts:profile"), {

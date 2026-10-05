@@ -36,9 +36,9 @@ signup = SignUpView.as_view()
 class ProfileUpdateView(UpdateView):
     """Let a signed-in user finish the fields Google could not supply.
 
-    Acts as the ``LOGIN_REDIRECT_URL`` so it must cope with two cases: a
-    complete profile (redirect straight on to the dashboard) and an incomplete
-    one, which is every Google sign-up until they save this form.
+    Acts as the ``LOGIN_REDIRECT_URL`` so it must cope with three cases: a
+    complete profile and staff (both redirected straight through), and an
+    incomplete one, which is every Google sign-up until they save this form.
     """
 
     form_class = ProfileForm
@@ -48,8 +48,14 @@ class ProfileUpdateView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def _needs_completion(self):
+        user = self.request.user
+        # Staff manage the site and already have a phone on file in practice;
+        # do not hold the admin dashboard hostage to a phone number.
+        return not user.phone and not (user.is_staff or user.is_superuser)
+
     def get(self, request, *args, **kwargs):
-        if not request.user.phone:
+        if self._needs_completion():
             return super().get(request, *args, **kwargs)
         return redirect(self.success_url)
 
