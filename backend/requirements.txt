@@ -21,3 +21,10 @@ requests==2.34.2
 # decodes it with PyJWT. Without this the callback dies with
 # "ModuleNotFoundError: No module named 'jwt'" and returns HTTP 500.
 PyJWT==2.15.1
+
+# Production server
+gunicorn==23.0.0
+uvicorn[standard]==0.32.1
+
+# PostgreSQL driver (psycopg3)
+psycopg[binary]==3.2.3

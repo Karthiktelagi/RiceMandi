@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Prefetch, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -13,14 +13,25 @@ from apps.market.models import Lot
 @login_required
 def conversation_list(request):
     """List all conversations for the current user."""
-    conversations = Conversation.objects.filter(
-        Q(buyer=request.user) | Q(merchant=request.user)
-    ).select_related("buyer", "merchant", "lot", "lot__variety").order_by("-last_message_at")
+    conversations = (
+        Conversation.objects.filter(Q(buyer=request.user) | Q(merchant=request.user))
+        .select_related("buyer", "merchant", "lot", "lot__variety")
+        .prefetch_related(
+            Prefetch(
+                "messages",
+                queryset=Message.objects.order_by("-created_at"),
+                to_attr="prefetched_messages",
+            )
+        )
+        .order_by("-last_message_at")
+    )
 
-    # Annotate with last message and unread count
+    # Compute last message and unread count from prefetched messages (eliminates N+1 queries)
     for conv in conversations:
-        conv.last_message = conv.messages.order_by("-created_at").first()
-        conv.unread_count = conv.messages.filter(read_at__isnull=True).exclude(sender=request.user).count()
+        conv.last_message = conv.prefetched_messages[0] if conv.prefetched_messages else None
+        conv.unread_count = sum(
+            1 for m in conv.prefetched_messages if m.read_at is None and m.sender_id != request.user.id
+        )
 
     return render(request, "chat/conversation_list.html", {"conversations": conversations})
 

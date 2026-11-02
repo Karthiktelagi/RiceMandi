@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Avg, Count, Max, Min, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -12,6 +12,7 @@ from django.views.decorators.http import require_GET, require_POST
 from apps.market.forms import LotForm, VarietyForm
 from apps.market.models import Booking, Lot, Mill, PriceRecord, TraderRating, Variety, Watch
 from apps.market.permissions import admin_required, approved_merchant_required
+from apps.market.services import get_rate_board_varieties
 
 
 @require_GET
@@ -21,18 +22,7 @@ def home_redirect(request):
 
 @require_GET
 def variety_list(request):
-    from django.db.models import Avg, Count, Max, Min, Q
-
-    varieties = (
-        Variety.objects.filter(is_active=True)
-        .annotate(
-            min_price=Min("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
-            max_price=Max("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
-            avg_price=Avg("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
-            lot_count=Count("lots", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
-        )
-        .order_by("name")
-    )
+    varieties = get_rate_board_varieties().order_by("name")
     return render(request, "market/variety_list.html", {"varieties": varieties})
 
 
@@ -159,16 +149,20 @@ def variety_detail(request, pk):
         trend_min = []
         trend_max = []
 
+    is_watching = request.user.is_authenticated and Watch.objects.filter(user=request.user, variety=variety).exists()
+
     return render(
         request,
         "market/variety_detail.html",
         {
             "variety": variety,
             "lots": lots,
+            "trend_data": bool(trend_labels),
             "trend_labels": json.dumps(trend_labels),
             "trend_avg": json.dumps(trend_avg),
             "trend_min": json.dumps(trend_min),
             "trend_max": json.dumps(trend_max),
+            "is_watching": is_watching,
         },
     )
 
@@ -218,13 +212,13 @@ def my_lots(request):
     return render(request, "market/my_lots.html", {"lots": lots})
 
 
-@login_required
 def lot_detail(request, pk):
     lot = get_object_or_404(Lot, pk=pk)
     return render(request, "market/lot_detail.html", {"lot": lot})
 
 
 @login_required
+@require_POST
 def watch_toggle(request, pk):
     variety = get_object_or_404(Variety, pk=pk, is_active=True)
     watch, created = Watch.objects.get_or_create(user=request.user, variety=variety)
@@ -243,30 +237,35 @@ def watch_list(request):
 
 
 @login_required
+@require_POST
 def book_lot(request, pk):
     """First-come-first-serve booking queue."""
     from apps.market.models import Booking
 
     lot = get_object_or_404(Lot, pk=pk, status=Lot.STATUS_ACTIVE, is_available=True)
-    if request.method == "POST":
-        quantity = request.POST.get("quantity_quintal", "0")
-        try:
-            quantity = Decimal(quantity)
-        except Exception:
-            quantity = Decimal("0")
-        if quantity <= 0:
-            messages.error(request, _("Enter a valid quantity."))
-            return redirect("market:lot_detail", pk=pk)
-        if quantity > lot.quantity_quintal:
-            messages.error(request, _("Not enough quantity available."))
-            return redirect("market:lot_detail", pk=pk)
+    if request.user == lot.merchant:
+        messages.error(request, _("You cannot book your own lot."))
+        return redirect("market:lot_detail", pk=pk)
 
-        # Get next queue position
-        last_booking = Booking.objects.filter(lot=lot).order_by("-queue_position").first()
+    quantity = request.POST.get("quantity_quintal", "0")
+    try:
+        quantity = Decimal(quantity)
+    except Exception:
+        quantity = Decimal("0")
+    if quantity <= 0:
+        messages.error(request, _("Enter a valid quantity."))
+        return redirect("market:lot_detail", pk=pk)
+    if quantity > lot.quantity_quintal:
+        messages.error(request, _("Not enough quantity available."))
+        return redirect("market:lot_detail", pk=pk)
+
+    with transaction.atomic():
+        locked_lot = Lot.objects.select_for_update().get(pk=lot.pk)
+        last_booking = Booking.objects.filter(lot=locked_lot).order_by("-queue_position").first()
         next_position = (last_booking.queue_position + 1) if last_booking else 1
 
         booking, created = Booking.objects.get_or_create(
-            lot=lot,
+            lot=locked_lot,
             buyer=request.user,
             defaults={
                 "quantity_quintal": quantity,
@@ -281,7 +280,6 @@ def book_lot(request, pk):
             )
         else:
             messages.info(request, _("You already have a booking for this lot."))
-        return redirect("market:lot_detail", pk=pk)
     return redirect("market:lot_detail", pk=pk)
 
 
@@ -294,45 +292,49 @@ def my_bookings(request):
 
 
 @login_required
+@require_POST
 def negotiate_lot(request, pk):
     """Buyer proposes a price to merchant."""
     from apps.market.models import Negotiation
 
     lot = get_object_or_404(Lot, pk=pk, status=Lot.STATUS_ACTIVE, is_available=True)
-    if request.method == "POST":
-        buyer_price = request.POST.get("buyer_price", "0")
-        quantity = request.POST.get("quantity_quintal", "0")
-        message = request.POST.get("message", "")
-        try:
-            buyer_price = Decimal(buyer_price)
-            quantity = Decimal(quantity)
-        except Exception:
-            buyer_price = Decimal("0")
-            quantity = Decimal("0")
-        if buyer_price <= 0:
-            messages.error(request, _("Enter a valid price."))
-            return redirect("market:lot_detail", pk=pk)
-
-        negotiation, created = Negotiation.objects.get_or_create(
-            lot=lot,
-            buyer=request.user,
-            defaults={
-                "merchant": lot.merchant,
-                "buyer_price": buyer_price,
-                "quantity_quintal": quantity,
-                "message": message,
-                "status": Negotiation.STATUS_PENDING,
-            },
-        )
-        if created:
-            messages.success(request, _("Your offer has been sent to the merchant."))
-        else:
-            messages.info(request, _("You already have a pending negotiation for this lot."))
+    if request.user == lot.merchant:
+        messages.error(request, _("You cannot negotiate on your own lot."))
         return redirect("market:lot_detail", pk=pk)
+
+    buyer_price = request.POST.get("buyer_price", "0")
+    quantity = request.POST.get("quantity_quintal", "0")
+    message = request.POST.get("message", "")
+    try:
+        buyer_price = Decimal(buyer_price)
+        quantity = Decimal(quantity)
+    except Exception:
+        buyer_price = Decimal("0")
+        quantity = Decimal("0")
+    if buyer_price <= 0:
+        messages.error(request, _("Enter a valid price."))
+        return redirect("market:lot_detail", pk=pk)
+
+    negotiation, created = Negotiation.objects.get_or_create(
+        lot=lot,
+        buyer=request.user,
+        defaults={
+            "merchant": lot.merchant,
+            "buyer_price": buyer_price,
+            "quantity_quintal": quantity,
+            "message": message,
+            "status": Negotiation.STATUS_PENDING,
+        },
+    )
+    if created:
+        messages.success(request, _("Your offer has been sent to the merchant."))
+    else:
+        messages.info(request, _("You already have a pending negotiation for this lot."))
     return redirect("market:lot_detail", pk=pk)
 
 
 @login_required
+@require_POST
 def enquire_lot(request, pk):
     """Buyer sends an enquiry about a lot. Auto-creates a chat conversation."""
     from apps.chat.models import Conversation, Message
@@ -340,50 +342,52 @@ def enquire_lot(request, pk):
     from apps.notifications.models import Notification
 
     lot = get_object_or_404(Lot, pk=pk, status=Lot.STATUS_ACTIVE, is_available=True)
-    if request.method == "POST":
-        message = request.POST.get("message", "").strip()
-        quantity_wanted = request.POST.get("quantity_wanted", "0")
-        try:
-            quantity_wanted = Decimal(quantity_wanted)
-        except Exception:
-            quantity_wanted = Decimal("0")
-
-        if not message:
-            messages.error(request, _("Please enter a message."))
-            return redirect("market:lot_detail", pk=pk)
-
-        # Create enquiry
-        enquiry = Enquiry.objects.create(
-            buyer=request.user,
-            lot=lot,
-            message=message,
-            quantity_wanted=quantity_wanted if quantity_wanted > 0 else None,
-        )
-
-        # Auto-create chat conversation
-        conversation, created = Conversation.objects.get_or_create(
-            buyer=request.user,
-            merchant=lot.merchant,
-            lot=lot,
-        )
-        if created:
-            Message.objects.create(
-                conversation=conversation,
-                sender=request.user,
-                body=message,
-            )
-
-        # Notify merchant
-        Notification.objects.create(
-            recipient=lot.merchant,
-            kind=Notification.KIND_ENQUIRY,
-            title=_("New Enquiry"),
-            body=_("%(buyer)s enquired about %(lot)s") % {"buyer": request.user.username, "lot": lot.variety.name},
-            url=f"/lots/{lot.pk}/",
-        )
-
-        messages.success(request, _("Your enquiry has been sent to the merchant."))
+    if request.user == lot.merchant:
+        messages.error(request, _("You cannot enquire about your own lot."))
         return redirect("market:lot_detail", pk=pk)
+
+    message = request.POST.get("message", "").strip()
+    quantity_wanted = request.POST.get("quantity_wanted", "0")
+    try:
+        quantity_wanted = Decimal(quantity_wanted)
+    except Exception:
+        quantity_wanted = Decimal("0")
+
+    if not message:
+        messages.error(request, _("Please enter a message."))
+        return redirect("market:lot_detail", pk=pk)
+
+    # Create enquiry
+    enquiry = Enquiry.objects.create(
+        buyer=request.user,
+        lot=lot,
+        message=message,
+        quantity_wanted=quantity_wanted if quantity_wanted > 0 else None,
+    )
+
+    # Auto-create chat conversation
+    conversation, created = Conversation.objects.get_or_create(
+        buyer=request.user,
+        merchant=lot.merchant,
+        lot=lot,
+    )
+    if created:
+        Message.objects.create(
+            conversation=conversation,
+            sender=request.user,
+            body=message,
+        )
+
+    # Notify merchant
+    Notification.objects.create(
+        recipient=lot.merchant,
+        kind=Notification.KIND_ENQUIRY,
+        title=_("New Enquiry"),
+        body=_("%(buyer)s enquired about %(lot)s") % {"buyer": request.user.username, "lot": lot.variety.name},
+        url=reverse("market:lot_detail", args=[lot.pk]),
+    )
+
+    messages.success(request, _("Your enquiry has been sent to the merchant."))
     return redirect("market:lot_detail", pk=pk)
 
 
@@ -399,36 +403,35 @@ def negotiation_list(request):
 
 
 @login_required
+@require_POST
 def negotiation_respond(request, pk):
     """Merchant responds to a negotiation (accept/reject/counter)."""
     from apps.market.models import Negotiation
 
     negotiation = get_object_or_404(Negotiation, pk=pk, merchant=request.user, status=Negotiation.STATUS_PENDING)
-    if request.method == "POST":
-        action = request.POST.get("action")
-        if action == "accept":
-            negotiation.status = Negotiation.STATUS_ACCEPTED
-            negotiation.merchant_price = negotiation.buyer_price
+    action = request.POST.get("action")
+    if action == "accept":
+        negotiation.status = Negotiation.STATUS_ACCEPTED
+        negotiation.merchant_price = negotiation.buyer_price
+        negotiation.save()
+        messages.success(request, _("Offer accepted."))
+    elif action == "reject":
+        negotiation.status = Negotiation.STATUS_REJECTED
+        negotiation.save()
+        messages.info(request, _("Offer rejected."))
+    elif action == "counter":
+        counter_price = request.POST.get("counter_price", "0")
+        try:
+            counter_price = Decimal(counter_price)
+        except Exception:
+            counter_price = Decimal("0")
+        if counter_price > 0:
+            negotiation.merchant_price = counter_price
+            negotiation.status = Negotiation.STATUS_COUNTERED
             negotiation.save()
-            messages.success(request, _("Offer accepted."))
-        elif action == "reject":
-            negotiation.status = Negotiation.STATUS_REJECTED
-            negotiation.save()
-            messages.info(request, _("Offer rejected."))
-        elif action == "counter":
-            counter_price = request.POST.get("counter_price", "0")
-            try:
-                counter_price = Decimal(counter_price)
-            except Exception:
-                counter_price = Decimal("0")
-            if counter_price > 0:
-                negotiation.merchant_price = counter_price
-                negotiation.status = Negotiation.STATUS_COUNTERED
-                negotiation.save()
-                messages.success(request, _("Counter offer sent."))
-            else:
-                messages.error(request, _("Enter a valid counter price."))
-        return redirect("market:negotiation_list")
+            messages.success(request, _("Counter offer sent."))
+        else:
+            messages.error(request, _("Enter a valid counter price."))
     return redirect("market:negotiation_list")
 
 

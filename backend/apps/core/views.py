@@ -1,12 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Avg, Count, Max, Min, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import translation
 from django.views.decorators.http import require_GET
 
+from apps.accounts.models import User
 from apps.accounts.utils import safe_redirect
+from apps.market.models import Lot, PriceRecord, Variety
+from apps.market.services import get_rate_board_varieties
 
 LANGUAGE_CODES = ("kn", "en")
 
@@ -44,23 +46,8 @@ def dashboard(request):
 
 def home(request):
     """Home page - Rate board showing live rates per variety."""
-    from django.db.models import Avg, Max, Min, Q
 
-    from apps.accounts.models import User
-    from apps.market.models import Lot, Variety, PriceRecord
-
-    # Get active varieties with live lots
-    varieties = (
-        Variety.objects.filter(is_active=True)
-        .annotate(
-            min_price=Min("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
-            max_price=Max("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
-            avg_price=Avg("lots__price_per_quintal", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
-            lot_count=Count("lots", filter=Q(lots__status=Lot.STATUS_ACTIVE, lots__is_available=True)),
-        )
-        .filter(lot_count__gt=0)
-        .order_by("name")
-    )
+    varieties = get_rate_board_varieties()
 
     # Get featured lots
     featured_lots = Lot.objects.filter(status=Lot.STATUS_ACTIVE, is_available=True, is_featured=True).select_related(

@@ -9,8 +9,21 @@
 
 {% block content %}
 <div class="container py-4">
-  <h1 class="h3 mb-3">{{ variety.name }}</h1>
-  <p class="text-muted">{{ variety.get_category_display }} • {{ variety.get_grade_display }}</p>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h1 class="h3 mb-1">{{ variety.name }}</h1>
+      <p class="text-muted mb-0">{{ variety.get_category_display }} • {{ variety.get_grade_display }}</p>
+    </div>
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'market:watch_toggle' variety.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-sm {% if is_watching %}btn-danger{% else %}btn-outline-success{% endif %}">
+        <i class="bi bi-heart{% if is_watching %}-fill{% endif %}"></i>
+        {% if is_watching %}{% trans "Watching" %}{% else %}{% trans "Watch" %}{% endif %}
+      </button>
+    </form>
+    {% endif %}
+  </div>
   {% if variety.description %}<p>{{ variety.description }}</p>{% endif %}
 
   {% if trend_data %}

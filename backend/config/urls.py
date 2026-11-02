@@ -1,11 +1,19 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 
+
+def healthz(request):
+    return JsonResponse({"status": "ok"})
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("healthz", healthz),
+    path("health/", healthz),
     # Translation catalogue for HTMX/Bootstrap widgets that need client-side strings.
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("chat/", include("apps.chat.urls")),

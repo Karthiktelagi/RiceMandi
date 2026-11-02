@@ -1,9 +1,20 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
+from rest_framework.throttling import AnonRateThrottle
+from rest_framework.views import APIView
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from apps.accounts import views
 
 app_name = "accounts"
+
+
+class LoginThrottleMixin:
+    throttle_classes = [AnonRateThrottle]
+    throttle_scope = "login"
+
 
 urlpatterns = [
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
